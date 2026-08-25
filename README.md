@@ -1,7 +1,3 @@
-# SB Discord Extension Documentation
+# KitzyAngel's Streamerbot Extensions
 
-All the documentation for the extension for Streambot that adds a Discord bot.
-
-[Streamerbot Extension]()
-
-Also includes documentation for any use case extensions that build on the Streamerbot Discord Extension
+All the documentation for the extension made by me to share with others <3
