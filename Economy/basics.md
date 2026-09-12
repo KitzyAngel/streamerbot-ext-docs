@@ -458,12 +458,12 @@ Go to Commands and add a new command for adding currency.
 > <span>Explicit Capture</span>{: .text-yellow-300} Marked as On<br>
 > <span>Makes the regex only capture groups we have named or numbered</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Group</span>{: .text-yellow-300} Economy<br>
-> <span>Name for group for all your economy commands to keep it better organized</span>{: .text-grey-dk-000 .fs-3 } <br><br>
+> <span>Name for group for all your economy commands to keep it better organized</span>{: .text-grey-dk-000 .fs-3 }
 
 </details>
 
-You can set the grant type to Deny to only allow the streamer to use the command or you can set it to Allow and add Moderators so only Mods and the streamer can use the command.<br><br>
-<details markdown="1">
+You can set the grant type to Deny to only allow the streamer to use the command or you can set it to Allow and add Moderators so only Mods and the streamer can use the command.
+<details markdown="1" id="add_currency_regex">
 <summary>
 The Regular Expression Breakdown (And what to change for your currency name)
 </summary>
@@ -933,3 +933,93 @@ which could result in this for example:
 <hr style="border:1px solid gray">
 
 # Premade Extension
+
+## Short Video
+{: .no_toc }
+<iframe width="500" src="https://www.youtube.com/watch?v=cP3iUpfzeqA"></iframe>
+
+---
+
+## 1. Import the extension
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/basics/premade_import.png" width="500"><br>
+Download the [extension]({{ site.baseurl }}/downloads/EconomyBasics.sb). Then click Import at the top of streamerbot and drag the file into the box. Then click Import then Ok.
+
+## 2. Create Name of your Currency
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/basics/add_currency_global_variables.png" width="500"><br>
+Create 2 Global Variables for the name of your currency for the viewers to see! Making them global variables makes it much easier if you want to rename your currency at any point.<br><br>
+Click Global Variables at the top, then Persisted Globals, then right click in table and click 'Add'. 
+
+<details markdown="1">
+<summary>
+Then add a variable for the singular name of your currency and one for the plural name of your currency.
+</summary>
+
+{: .subaction-title }
+> Add Global Variable
+> 
+> <span>Variable</span>{: .text-yellow-300} currencyName<br>
+> <span>The name of the variable for the singular name of your currency</span>{: .text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value</span>{: .text-yellow-300} token<br>
+> <span>The singular name of your currency</span>{: .text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Add Global Variable
+> 
+> <span>Variable</span>{: .text-yellow-300} currencyNamePlural<br>
+> <span>The name of the variable for the plural name of your currency</span>{: .text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value</span>{: .text-yellow-300} tokens<br>
+> <span>The plural name of your currency</span>{: .text-grey-dk-000 .fs-3 }
+
+</details>
+
+## 3. Setup the commands
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/basics/premade_commands.png" width="500"><br>
+
+<details markdown="1">
+<summary>
+Setup command for showing balance. Edit Balance Command
+</summary>
+
+{: .subaction-title }
+> Edit Command
+> 
+> <span>Enabled</span>{: .text-yellow-300} Marked as On<br>
+> <span>Mark enabled so the command works</span>{: .text-grey-dk-000 .fs-3 }<br><br>
+> <span>Commands</span>{: .text-yellow-300} !token<br>
+> <span>Set to any commands you want for people to see their balance of currency. (i.e. !tokens !token & !balance if your currency is tokens or !rings !ring & !balance if its rings)</span>{: .text-grey-dk-000 .fs-3 }
+
+</details>
+
+<details markdown="1">
+<summary>
+Setup command for adding currency to users. Edit Add Currency Command
+</summary>
+
+{: .subaction-title }
+> Edit Command
+> 
+> <span>Enabled</span>{: .text-yellow-300} Marked as On<br>
+> <span>Mark enabled so the command works</span>{: .text-grey-dk-000 .fs-3 }<br><br>
+> <span>Regex</span>{: .text-yellow-300} ^ \*! \*(add\|give) \*(token\|money\|monie)s? \*@?(?\<target\>\S+) +(?\<amount\>(\+\|-)?\d{1,9})<br>
+> <span>Change the (token\|money\|monie) part in the parenthese to any words for your currency all seprated by \| like in the default. If you want more of an expliation and/or full breakdown check [up here](#2-create-command-for-add-currency)</span>{: .text-grey-dk-000 .fs-3 }
+
+</details>
+
+
+## 4. (OPTIONAL) Change messages
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/basics/premade_messages.png" width="500"><br>
+Look for blue comments that start with "\/ Message" for places for messages to change. This extension has these ones:<br>
+* Message showing user's balance for Balance Command (in Show Balance Action)
+* Message for when Add Currency command is given an invalid user (in Add Currency)
+* Message for when Add Currency adjusts a users currency (in Add Currency)
+* Message for if an invalid number was put into the Add Currency Command (in Add Currency, only if using normal instead of regex for Add Currency Command)
+
+## 5. (OPTIONAL) Change to another platform than twitch
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/basics/premade_send_message.png" width="500"><br>
+The send message action is very basic and can easily be changed to send to another platform.<br>
+Also the Add Currency Action gets Twitch User info so you could replace that with Kick, look [here]({{ site.baseurl }}/Economy/basics_youtube.html) to see how to make it work for youtube, or get a little more complicated and make it work for multiple <3
