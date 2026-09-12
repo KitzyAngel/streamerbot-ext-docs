@@ -2,7 +2,11 @@ title: SB Discord Docs
 description: Documentation for the Extensions KitzyAngel has made
 theme: just-the-docs
 
-color_scheme: dark
+callouts:
+  subaction:
+    color: yellow
+
+color_scheme: dark_plus
 
 url: https://kitzyangel.github.io/
 
