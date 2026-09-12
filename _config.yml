@@ -1,5 +1,5 @@
-title: SB Discord Docs
-description: Documentation for the Extensions KitzyAngel has made
+title: Kitzy's Extensions and Tutorials
+description: Documentation for the Extensions KitzyAngel has made and tutorials
 theme: just-the-docs
 
 callouts:
@@ -14,7 +14,8 @@ url: https://kitzyangel.github.io/
 aux_links:
   Docs Repo: https://github.com/KitzyAngel/streamerbot-ext-docs
 
-nav_external_links:
-  - title: Discord Extension
-    url: https://kitzyangel.github.io/Streamerbot-Discord-Ext-Docs/
-    opens_in_new_tab: true
+ 
+#nav_external_links:
+#  - title: Discord Extension
+#    url: https://kitzyangel.github.io/Streamerbot-Discord-Ext-Docs/
+#    opens_in_new_tab: true

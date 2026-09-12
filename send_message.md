@@ -4,6 +4,6 @@ layout: post
 nav_order: 1
 ---
 
-# KitzyAngel's Streamerbot Extensions
+# Sending Messages
 
-All the documentation for the extension made by me to share with others <3
+Documention for making a Send Message Action and Why
