@@ -34,7 +34,7 @@ Then it adds a command for viewing a player's current currency and for giving/ta
 
 ## Full Video
 {: .no_toc }
-<iframe width="500" src="https://youtu.be/QJWo4mBWG2s"></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/QJWo4mBWG2s?si=mgGPC50trkkvCc2q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ---
 
@@ -936,7 +936,7 @@ which could result in this for example:
 
 ## Short Video
 {: .no_toc }
-<iframe width="500" src="https://youtube.com/shorts/LGSfLPEAjaE"></iframe>
+<iframe height="560" width="315" src="https://www.youtube.com/embed/LGSfLPEAjaE?si=mgGPC50trkkvCc2q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ---
 
