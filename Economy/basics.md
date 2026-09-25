@@ -476,7 +476,7 @@ The Regular Expression Breakdown (And what to change for your currency name)
 > <span>(add\|give) *</span>{: .text-yellow-300}<br>
 > <span>add or give text to start the command with any number of spaces after it</span>{: .text-grey-dk-000 .fs-3 } <br><br>
 > <span>(token\|money\|monie)</span>{: .text-yellow-300}<br>
-> <span>CHANGE THIS! The possible names for the currency. default is token or money or monie. put any you want all seperated by a \|. (i.e. (bun\|kkoin) or (onionring\|ring) or (blood\|drop|blooddrop))</span>{: .text-grey-dk-000 .fs-3 } <br><br>
+> <span>CHANGE THIS! The possible names for the currency. default is token or money or monie. put any you want all seperated by a \|. (i.e. (coin\|gold) or (cash) or (blood\|drop|blooddrop))</span>{: .text-grey-dk-000 .fs-3 } <br><br>
 > <span>s? \*</span>{: .text-yellow-300}<br>
 > <span>Allow an s after the currency name and any number of spaces</span>{: .text-grey-dk-000 .fs-3 } <br><br>
 > <span>@?(?\<target\>\S+) +</span>{: .text-yellow-300}<br>
@@ -495,12 +495,12 @@ Example Regular expressions
 {: .subaction-title }
 > Example Regex
 > 
-> <span>^ \*! \*(add\|give) \*(bun\|kkoin)s? \*@?(?\<target\>\S+) +(?\<amount\>(\+\|-)?\d{1,9})</span>{: .text-yellow-300}<br>
-> <span>Matches !addbuns @KitzyAngel 100 or !givebun @BatzyKitty -10 or !givekkoin @Onion 10</span>{: .text-grey-dk-000 .fs-3 } <br><br>
+> <span>^ \*! \*(add\|give) \*(coin\|gold)s? \*@?(?\<target\>\S+) +(?\<amount\>(\+\|-)?\d{1,9})</span>{: .text-yellow-300}<br>
+> <span>Matches !addcoins @KitzyAngel 100 or !givegold @BatzyKitty -10 or !givecoin @Onion 10</span>{: .text-grey-dk-000 .fs-3 } <br><br>
 > <span>^ \*! \*(add\|give) \*(token\|money\|monie)s? \*@?(?\<target\>\S+) +(?\<amount\>(\+\|-)?\d{1,9})</span>{: .text-yellow-300}<br>
 > <span>Matches !addtokens @KitzyAngel 100 or !givemonies @BatzyKitty -10 or !addtoken @Onion 10</span>{: .text-grey-dk-000 .fs-3 } <br><br>
-> <span>^ \*! \*(add\|give) \*(onion\|ring\|onionring)s? \*@?(?\<target\>\S+) +(?\<amount\>(\+\|-)?\d{1,9})</span>{: .text-yellow-300}<br>
-> <span>Matches !addonions @KitzyAngel 100 or !givering @BatzyKitty -10 or !addonionrings @Onion 10</span>{: .text-grey-dk-000 .fs-3 } <br><br>
+> <span>^ \*! \*(add\|give) \*(cash) \*@?(?\<target\>\S+) +(?\<amount\>(\+\|-)?\d{1,9})</span>{: .text-yellow-300}<br>
+> <span>Matches !addcash @KitzyAngel 100 or !givecash @BatzyKitty -10 or !addcash @Onion 10</span>{: .text-grey-dk-000 .fs-3 } <br><br>
 > <span>^ \*! \*(add\|give) \*(cash)s? \*@?(?\<target\>\S+) +(?\<amount\>(\+\|-)?\d{1,9})</span>{: .text-yellow-300}<br>
 > <span>Matches !addcash @KitzyAngel 100 or !givecash @BatzyKitty -10 or !addcash @Onion 10</span>{: .text-grey-dk-000 .fs-3 }
 
@@ -1020,6 +1020,7 @@ Look for blue comments that start with "\/ Message" for places for messages to c
 
 ## 5. (OPTIONAL) Change to another platform than twitch
 {: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/basics/premade_add_currency.png" width="500"><br>
+The Add Currency Action gets Twitch User info so you could replace that with Kick (The very first sub-action), look [here]({{ site.baseurl }}/Economy/basics_youtube.html) to see how to make it work for youtube, or get a little more complicated and make it work for multiple <3<br><br>
 <img src="{{ site.baseurl }}/img/Economy/basics/premade_send_message.png" width="500"><br>
-The send message action is very basic and can easily be changed to send to another platform.<br>
-Also the Add Currency Action gets Twitch User info so you could replace that with Kick, look [here]({{ site.baseurl }}/Economy/basics_youtube.html) to see how to make it work for youtube, or get a little more complicated and make it work for multiple <3
+Also The send message action is very basic and can easily be changed to send to another platform, look [here]({{ site.baseurl }}/send_message.html)<br>
