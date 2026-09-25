@@ -453,7 +453,7 @@ Go to Commands and add a new command for adding currency.
 > <span>The name of this command in streamerbot. This name is just for you and viewers won't see it.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Mode:</span>{: .text-yellow-300} Regex<br>
 > <span>I recommend a regex for better command control but I will also explain how to adjust if you do normal instead</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
-> <span>Regex:</span>{: .text-yellow-300} ^ \*! \*(add\|give) \*(token\|money\|monie)s? \*@?(?\<target\>\S+) +(?\<amount\>(\+\|-)?\d{1,9})<br>
+> <span>Regex:</span>{: .text-yellow-300} ^ \*! \*(add\|give) \*(token\|money\|monie)s? \*@?(?\<target\>\S+) +(?\<amount\>(\\\+\|-)?\d{1,9})<br>
 > <span>Regex for getting the command and the user to add to and amount to add. Full breakdown below.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Explicit Capture</span>{: .text-yellow-300} Marked as On<br>
 > <span>Makes the regex only capture groups we have named or numbered</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
@@ -469,7 +469,7 @@ The Regular Expression Breakdown (And what to change for your currency name)
 </summary>
 
 {: .subaction-title }
-> ^ \*! \*(add\|give) \*(token\|money\|monie)s? \*@?(?\<target\>\S+) +(?\<amount\>(\+\|-)?\d{1,9})
+> ^ \*! \*(add\|give) \*(token\|money\|monie)s? \*@?(?\<target\>\S+) +(?\<amount\>(\\\+\|-)?\d{1,9})
 > 
 > <span>^ \*! \*</span>{: .text-yellow-300}<br>
 > <span>Start the command with a ! with any number of spaces before and after it.</span>{: .text-grey-dk-000 .fs-3 } <br><br>
@@ -481,7 +481,7 @@ The Regular Expression Breakdown (And what to change for your currency name)
 > <span>Allow an s after the currency name and any number of spaces</span>{: .text-grey-dk-000 .fs-3 } <br><br>
 > <span>@?(?\<target\>\S+) +</span>{: .text-yellow-300}<br>
 > <span>Captures any number of non-whitespace characters followed by one or more spaces not including a single leading @ if any. (aka, the user being targeted).</span>{: .text-grey-dk-000 .fs-3 } <br><br>
-> <span>(?\<amount\>(\+\|-)?\d{1,9})</span>{: .text-yellow-300}<br>
+> <span>(?\<amount\>(\\\+\|-)?\d{1,9})</span>{: .text-yellow-300}<br>
 > <span>Captures 1 to 9 number digits that can have a +, -, or nothing in from of it. (aka the amount to add)</span>{: .text-grey-dk-000 .fs-3 }
 
 </details>
@@ -495,13 +495,13 @@ Example Regular expressions
 {: .subaction-title }
 > Example Regex
 > 
-> <span>^ \*! \*(add\|give) \*(coin\|gold)s? \*@?(?\<target\>\S+) +(?\<amount\>(\+\|-)?\d{1,9})</span>{: .text-yellow-300}<br>
+> <span>^ \*! \*(add\|give) \*(coin\|gold)s? \*@?(?\<target\>\S+) +(?\<amount\>(\\\+\|-)?\d{1,9})</span>{: .text-yellow-300}<br>
 > <span>Matches !addcoins @KitzyAngel 100 or !givegold @BatzyKitty -10 or !givecoin @Onion 10</span>{: .text-grey-dk-000 .fs-3 } <br><br>
-> <span>^ \*! \*(add\|give) \*(token\|money\|monie)s? \*@?(?\<target\>\S+) +(?\<amount\>(\+\|-)?\d{1,9})</span>{: .text-yellow-300}<br>
+> <span>^ \*! \*(add\|give) \*(token\|money\|monie)s? \*@?(?\<target\>\S+) +(?\<amount\>(\\\+\|-)?\d{1,9})</span>{: .text-yellow-300}<br>
 > <span>Matches !addtokens @KitzyAngel 100 or !givemonies @BatzyKitty -10 or !addtoken @Onion 10</span>{: .text-grey-dk-000 .fs-3 } <br><br>
-> <span>^ \*! \*(add\|give) \*(cash) \*@?(?\<target\>\S+) +(?\<amount\>(\+\|-)?\d{1,9})</span>{: .text-yellow-300}<br>
+> <span>^ \*! \*(add\|give) \*(cash) \*@?(?\<target\>\S+) +(?\<amount\>(\\\+\|-)?\d{1,9})</span>{: .text-yellow-300}<br>
 > <span>Matches !addcash @KitzyAngel 100 or !givecash @BatzyKitty -10 or !addcash @Onion 10</span>{: .text-grey-dk-000 .fs-3 } <br><br>
-> <span>^ \*! \*(add\|give) \*(cash)s? \*@?(?\<target\>\S+) +(?\<amount\>(\+\|-)?\d{1,9})</span>{: .text-yellow-300}<br>
+> <span>^ \*! \*(add\|give) \*(cash)s? \*@?(?\<target\>\S+) +(?\<amount\>(\\\+\|-)?\d{1,9})</span>{: .text-yellow-300}<br>
 > <span>Matches !addcash @KitzyAngel 100 or !givecash @BatzyKitty -10 or !addcash @Onion 10</span>{: .text-grey-dk-000 .fs-3 }
 
 </details>

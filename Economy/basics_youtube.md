@@ -9,7 +9,8 @@ nav_exclude: true
 {: .no_toc }
 Since YouTube does NOT have a get user info sub-action you can not use Target as the Source when getting and setting global variables.
 You can get user's variables by name and/or id using a tiny bit of code though.
-You will have to edit the Pay Currency & Get Balance Actions since they are the only places an of my economy extensions edit global variables.
+You will have to edit the Pay Currency & Get Balance Actions since they are the only places of my economy extensions that edit global variables.
+You will also have to edit any place you would get target user and just skip it for youtube since there is no way to varify a username exists.
 
 ---
 ## Table of Contents
