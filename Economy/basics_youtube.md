@@ -1,8 +1,8 @@
 ---
-title: YouTube Economy
+title: YouTube Economy Changes
 parent: Economy
 layout: post
-nav_exclude: true
+last_modified_date: 2/10/2026
 ---
 
 # Economy for YouTube (USES C# CODE)

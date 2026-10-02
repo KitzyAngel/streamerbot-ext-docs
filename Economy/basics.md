@@ -3,6 +3,13 @@ title: Basics
 parent: Economy
 layout: post
 nav_order: 1
+
+footnote1: <a href="#footnotes1" title="Target is who the action using this action got using a 'Get Target User' Sub-Action"><sup>1</sup></a>
+footnote2: <a href="#footnotes2" title="Redeemer is who is using the command or other trigger of the action using this action."><sup>2</sup></a>
+footnote3: <a href="#footnotes3" title='You can always just send a message through twitch or whatever platform you want but I use another action called Send Message Explained on the Send Message page, for compability with other extensions and platforms.'><sup>3</sup></a>
+footnote4: <a href="#footnotes3" title='Youtube doesn't have a Get User Target Info Sub-Action so it requires a tiny bit of code to rework both Pay Currency and Get Balance Actions shown on the Youtube Economy Changes Page'><sup>4</sup></a>
+
+last_modified_date: 2/10/2026
 ---
 
 # Economy Basics
@@ -39,7 +46,7 @@ Then it adds a command for viewing a player's current currency and for giving/ta
 ---
 
 ## Get Balance Action
-Action for getting user currency. It can get from the target[<sup>1</sup>](#footnotes1) or redeemer[<sup>2</sup>](#footnotes2).<br><br>
+Action for getting user currency. It can get from the target{{ page.footnote1 }} or redeemer{{ page.footnote2 }}.<br><br>
 I designed it this way to both make it more flexible and because, youtube for example, can't do target user but things like a streamerbot deck can't do redeemer user.
 
 ### 1. Add Action
@@ -64,7 +71,7 @@ I designed it this way to both make it more flexible and because, youtube for ex
 ### 2. Check If Redeemer and Get Currency
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/basics/get_balance_get_currency.png" width="500"><br>
-Then when using this action you may want to get the currency of the target[<sup>1</sup>](#footnotes1) or redeemer[<sup>2</sup>](#footnotes2). We are going to do this very simply using an argument set by the action calling this action.
+Then when using this action you may want to get the currency of the target{{ page.footnote1 }} or redeemer{{ page.footnote2 }}. We are going to do this very simply using an argument set by the action calling this action.
 
 <details markdown="1">
 <summary>So add an If/Else statement</summary>
@@ -73,7 +80,7 @@ Then when using this action you may want to get the currency of the target[<sup>
 > Core > Logic > If/Else
 >
 > <span>Input:</span>{: .text-yellow-300} %redeemer%<br>
-> <span>The argument set by the action calling this action if it wants the currency of the redeemer[<sup>2</sup>](#footnotes2) or the target[<sup>1</sup>](#footnotes1)</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
+> <span>The argument set by the action calling this action if it wants the currency of the redeemer{{ page.footnote2 }} or the target{{ page.footnote1 }}</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Operation:</span>{: .text-yellow-300} Equals<br><br>
 > <span>Value:</span>{: .text-yellow-300} True
 </details>
@@ -87,7 +94,7 @@ Then in the True result of the If/Else add a Global (Get) sub-action to get the 
 > Core > Globals > Global (Get)
 > 
 > <span>Source:</span>{: .text-yellow-300} User (Redeemer)<br>
-> <span>The currency is from the redeemer[<sup>2</sup>](#footnotes2)</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
+> <span>The currency is from the redeemer{{ page.footnote2 }}</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Presisted:</span>{: .text-yellow-300} marked as on<br>
 > <span>Meaning the currency won't reset with streamerbot closing</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Variable Name:</span>{: .text-yellow-300} whatever you want the currency to be called internally (i.e. balance)<br>
@@ -107,7 +114,7 @@ Then in the False result of the If/Else add another Global (Get) sub-action to g
 > Core > Globals > Global (Get)
 > 
 > <span>Source:</span>{: .text-yellow-300} User (Target)<br>
-> <span>The currency is from the target[<sup>1</sup>](#footnotes1)</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
+> <span>The currency is from the target{{ page.footnote1 }}</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Presisted:</span>{: .text-yellow-300} marked as on<br>
 > <span>Meaning the currency won't reset with streamerbot closing</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Variable Name:</span>{: .text-yellow-300} whatever you want the currency to be called internally (i.e. balance)<br>
@@ -206,7 +213,7 @@ Then add another If/Else for checking if a message was given for an invalid numb
 > <span>Checks if the message was given</span>{: 	.text-grey-dk-000 .fs-3 }
 </details>
 
-Then in the False of that If/Else (because false means the message exists) send the message given.[<sup>3</sup>](#footnotes3)<br><br>
+Then in the False of that If/Else (because false means the message exists) send the message given.{{ page.footnote3 }}<br><br>
 
 ### 3. Check for a minimum cost
 {: .no_toc }
@@ -268,7 +275,7 @@ Then add another If/Else (To check if there is a message to show when below min 
 > <span>Checks if the message was given</span>{: 	.text-grey-dk-000 .fs-3 }
 </details>
 
-Then in the False of that If/Else send the message given[<sup>3</sup>](#footnotes3)<br><br>
+Then in the False of that If/Else send the message given{{ page.footnote3 }}<br><br>
 And finally add a Break after that If/Else since the cost was too little we don't wanna continue to adjust the currency.
 
 ### 4. Check if user has enough currency
@@ -331,7 +338,7 @@ Then add another If/Else (To check if there is a message to show when the user d
 > <span>Checks if the message was given</span>{: 	.text-grey-dk-000 .fs-3 }
 </details>
 
-Then in the False of that If/Else send the message given.[<sup>3</sup>](#footnotes3)<br><br>
+Then in the False of that If/Else send the message given.{{ page.footnote3 }}<br><br>
 
 ### 5. Adjust the user's currency
 {: .no_toc }
@@ -358,7 +365,7 @@ Then add another If/Else (To check if we are adjusting the redeemer or target)
 > Core > Logic > If/Else
 > 
 > <span>Input:</span>{: .text-yellow-300} redeemer<br>
-> <span>The argument set if we are adjusting the currency of the redeemer[<sup>2</sup>](#footnotes2) as opposed to the target[<sup>1</sup>](#footnotes1)</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
+> <span>The argument set if we are adjusting the currency of the redeemer{{ page.footnote2 }} as opposed to the target{{ page.footnote1 }}</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Operation:</span>{: .text-yellow-300} Equals<br><br>
 > <span>Value:</span>{: .text-yellow-300} True<br>
 </details>
@@ -372,7 +379,7 @@ Then in the True of tha If/Else (%redeemer%==True) add a Global (Set) (To adjust
 > Core > Globals > Global (Set)
 > 
 > <span>Destination:</span>{: .text-yellow-300} User (Redeemer)<br>
-> <span>Set to the redeemer[<sup>2</sup>](#footnotes2) of the calling action.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
+> <span>Set to the redeemer{{ page.footnote2 }} of the calling action.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Persisted:</span>{: .text-yellow-300} Marked as On<br>
 > <span>On so the users currency doesn't reset when streamerbot closes</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Variable Name:</span>{: .text-yellow-300} balance<br>
@@ -392,7 +399,7 @@ Then Inside the False of the same If/Else add another Global (Set) (To adjust th
 > Core > Globals > Global (Set)
 > 
 > <span>Destination:</span>{: .text-yellow-300} User (Target)<br>
-> <span>Set to the target[<sup>1</sup>](#footnotes1) of the calling action.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
+> <span>Set to the target{{ page.footnote1 }} of the calling action.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Persisted:</span>{: .text-yellow-300} Marked as On<br>
 > <span>On so the users currency doesn't reset when streamerbot closes</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Variable Name:</span>{: .text-yellow-300} balance<br>
@@ -531,7 +538,7 @@ Add Trigger to the action of the command created in step 2 through Core > Comman
 <img src="{{ site.baseurl }}/img/Economy/basics/add_currency_check_user.png" width="500"><br>
 <details markdown="1">
 <summary>
-Get the user for the target of the command. (I use Sub-Action Twitch -> User -> Get User Info For Target for a Twitch command but any Get User Info Sub-action should work)[<sup>4</sup>](#footnotes4)
+Get the user for the target of the command. (I use Sub-Action Twitch -> User -> Get User Info For Target for a Twitch command but any Get User Info Sub-action should work){{ page.footnote4 }}
 </summary>
 
 {: .subaction-title }
@@ -557,7 +564,7 @@ Then add an If/Else to check if they exist.
 
 </details>
 
-Then in the false send a message[<sup>3</sup>](#footnotes3) that the user was not found if you want and Add a Break to stop since you can't add currency to an invalid user.
+Then in the false send a message{{ page.footnote3 }} that the user was not found if you want and Add a Break to stop since you can't add currency to an invalid user.
 
 ### 5. Add the currency to the user
 {: .no_toc }
@@ -623,7 +630,7 @@ First make sure it actually added the currency by adding an If/Else.
 
 </details>
 
-Then in the True send a message[<sup>3</sup>](#footnotes3) that it succeded with any info you may want. Below is an example message and how to get all the parts.
+Then in the True send a message{{ page.footnote3 }} that it succeded with any info you may want. Below is an example message and how to get all the parts.
 
 ### 7. (OPTIONAL) Get more info for sending message
 {: .no_toc }
