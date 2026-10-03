@@ -1,6 +1,6 @@
 ---
 title: YouTube Economy Changes
-parent: Economy
+parent: Basics
 layout: post
 last_modified_date: 2/10/2026
 ---

@@ -26,14 +26,14 @@ last_modified_date: 2/10/2026
 
 # Functionality
 
-An economy system is all based on a currency that each user has. (i.e. Tokens, coins, rings, etc). So the first step is to keep track of each user's currency for both earning and using in your economy.<br><br>
-This is done in streamerbot using a global persisted user variable. Global, meaning it can be accessed from any action, persisted, meaning it stays the same value even after restart of streamerbot, and user variable, meaning a variable tied to each user or viewer.<br><br>
-This extension first adds two basic but powerful actions for adjusting each users currency and for getting each users currency so they can easily be reused by anything else in your economy. These are made as seprate actions for 2 reasons.<br>
+An economy system is all based on a currency that each viewer has. (i.e. Tokens, coins, rings, etc). So the first step is to keep track of each viewer's currency for both earning and using in your economy.<br><br>
+This is done in streamerbot using a global persisted user variable. Global, meaning it can be accessed from any action, persisted, meaning it stays the same value even after restart of streamerbot, and user variable, meaning a variable tied to each viewer.<br><br>
+This extension first adds two basic but powerful actions for adjusting each viewer's currency and for getting each viewer's currency so they can easily be reused by anything else in your economy. These are made as seprate actions for 2 reasons.<br>
 1. So its easier to share with others and they can just change these actions to match their own currency. 
 2. So if you ever want to change your currency later you only need to change it here.<br><br>
 
 [//]: # (End List)
-Then it adds a command for viewing a player's current currency and for giving/taking currency from any user.<br>
+Then it adds a command for viewing a player's current currency and for giving/taking currency from any viewer.<br>
 
 <hr style="border:1px solid gray">
 
@@ -46,20 +46,20 @@ Then it adds a command for viewing a player's current currency and for giving/ta
 ---
 
 ## Get Balance Action
-Action for getting user currency. It can get from the target{{ page.footnote1 }} or redeemer{{ page.footnote2 }}.<br><br>
-I designed it this way to both make it more flexible and because, youtube for example, can't do target user but things like a streamerbot deck can't do redeemer user.
+Action for getting viewer's currency. It can get from the target{{ page.footnote1 }} or redeemer{{ page.footnote2 }}.<br><br>
+I designed it this way to both make it more flexible and because, youtube for example, can't do target user{{ page.footnote1 }} but things like a streamerbot deck can't do redeemer{{ page.footnote2 }}.
 
 ### 1. Add Action
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/basics/get_balance_add_action.png" width="500"><br>
 <details markdown="1">
-<summary>First you need an action for getting each users current balance. So create a basic action for this.</summary>
+<summary>First you need an action for getting each viewer's current balance. So create a basic action for this.</summary>
 
 {: .subaction-title }
 > Add Action
 >
 > <span>Name:</span>{: .text-yellow-300} Get Balance<br>
-> <span>Whatever you wanna name the action for getting the currency of a user</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
+> <span>Whatever you wanna name the action for getting the currency of a viewer</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Group:</span>{: .text-yellow-300} Economy<br>
 > <span>Group name for your economy actions</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Exclude from Action Queue Pending/History:</span>{: .text-yellow-300} Marked On<br>
@@ -98,11 +98,11 @@ Then in the True result of the If/Else add a Global (Get) sub-action to get the 
 > <span>Presisted:</span>{: .text-yellow-300} marked as on<br>
 > <span>Meaning the currency won't reset with streamerbot closing</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Variable Name:</span>{: .text-yellow-300} whatever you want the currency to be called internally (i.e. balance)<br>
-> <span>This is NOT what users see, this is just for you. If you want to use my extensions without having to change this on them as well, set this to balance.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
+> <span>This is NOT what viewers see, this is just for you. If you want to use my extensions without having to change this on them as well, set this to balance.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Destination Variable:</span>{: .text-yellow-300} same as Variable Name (i.e. balance)<br>
 > <span>This is the local name of the currency, easier to just match to the global</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Default value:</span>{: .text-yellow-300} 0<br>
-> <span>whatever you want a user to have if they have never earned any currency from your economy yet</span>{: 	.text-grey-dk-000 .fs-3 }
+> <span>whatever you want a viewer to have if they have never earned any currency from your economy yet</span>{: 	.text-grey-dk-000 .fs-3 }
 </details>
 
 <details markdown="1">
@@ -118,17 +118,17 @@ Then in the False result of the If/Else add another Global (Get) sub-action to g
 > <span>Presisted:</span>{: .text-yellow-300} marked as on<br>
 > <span>Meaning the currency won't reset with streamerbot closing</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Variable Name:</span>{: .text-yellow-300} whatever you want the currency to be called internally (i.e. balance)<br>
-> <span>This is NOT what users see, this is just for you. If you want to use my extensions without having to change this on them as well, set this to balance.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
+> <span>This is NOT what viewers see, this is just for you. If you want to use my extensions without having to change this on them as well, set this to balance.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Destination Variable:</span>{: .text-yellow-300} same as Variable Name (i.e. balance)<br>
 > <span>This is the local name of the currency, easier to just match to the global</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Default value:</span>{: .text-yellow-300} 0<br>
-> <span>whatever you want a user to have if they have never earned any currency from your economy yet</span>{: 	.text-grey-dk-000 .fs-3 }
+> <span>whatever you want a viewer to have if they have never earned any currency from your economy yet</span>{: 	.text-grey-dk-000 .fs-3 }
 </details>
 
 ---
 
 ## Pay Currency Action
-Action for adjusting a user's currency. Defaults to taking away (subtracting) the given amount but you can give a negative amount to effectively add.<br><br>
+Action for adjusting a viewer's currency. Defaults to taking away (subtracting) the given amount but you can give a negative amount to effectively add.<br><br>
 I designed it this way to allow the function to handle raw user input of cost for common commands in an economy so you don't have to keep validating cost input in every command.
 <img src="{{ site.baseurl }}/img/Economy/basics/pay_currency_action.png" width="500"><br>
 
@@ -138,14 +138,14 @@ I designed it this way to allow the function to handle raw user input of cost fo
 <img src="{{ site.baseurl }}/img/Economy/basics/get_balance_add_action.png" width="500"><br>
 <details markdown="1">
 <summary>
-Next you need an action for adjusting the balance of users. So create a basic action for this.
+Next you need an action for adjusting the balance of viewers. So create a basic action for this.
 </summary>
 
 {: .subaction-title }
 > Add Action
 >
 > <span>Name:</span>{: .text-yellow-300} Pay Currency<br>
-> <span>Whatever you wanna name the action for adjusting the currency of a user. I name it Pay cuz the default will subtract from a users balance.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
+> <span>Whatever you wanna name the action for adjusting the currency of a viewer. I name it Pay cuz the default will subtract from a viewer's balance.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Group:</span>{: .text-yellow-300} Economy<br>
 > <span>Group name for your economy actions. (want the same group as your Get Balance Action)</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Exclude from Action Queue Pending/History:</span>{: .text-yellow-300} Marked On<br>
@@ -155,7 +155,7 @@ Next you need an action for adjusting the balance of users. So create a basic ac
 ### 2. Check if cost is a valid number
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/basics/pay_currency_check_if_valid_number.png" width="500"><br>
-First we want to check if the cost given by the action calling this action is a valid number. This is done so that we can just give it user inputted number if we want.
+First we want to check if the cost given by the action calling this action is a valid number. This is done so that we can just give it a viewer's inputted number if we want.
 <details markdown="1">
 <summary>
 Add a If/Else statement
@@ -195,7 +195,7 @@ Then in the False add a set argument (To let the action that called this action 
 > Core > Argument > Set Argument
 > 
 > <span>Variable Name:</span>{: .text-yellow-300} result<br>
-> <span>Name of the argument the action calling this action will use to see if the user's currency was actually adjusted</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Name of the argument the action calling this action will use to see if the viewer's currency was actually adjusted</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Value:</span>{: .text-yellow-300} False
 </details>
 
@@ -228,7 +228,7 @@ In the True of step 1's If/Else add another If/Else
 > Core > Logic > If/Else
 > 
 > <span>Input:</span>{: .text-yellow-300} minCost<br>
-> <span>The argument set if the action calling wants to check for a minimum cost before asjusting the user's balance. (Note there is no % cuz we are checking if the variable exists by name)</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
+> <span>The argument set if the action calling wants to check for a minimum cost before adjusting the viewer's balance. (Note there is no % cuz we are checking if the variable exists by name)</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Operation:</span>{: .text-yellow-300} Does Not Exist
 </details>
 
@@ -242,7 +242,7 @@ In the False of that If/Else (meaning the minCost does Exist) add another If/Els
 > Core > Logic > If/Else
 > 
 > <span>Input:</span>{: .text-yellow-300} %cost%<br>
-> <span>The argument set that is the cost wanting to be adjusted to the user currency</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
+> <span>The argument set that is the cost wanting to be adjusted to the viewer's currency</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Operation:</span>{: .text-yellow-300} Less Than<br><br>
 > <span>Value:</span>{: .text-yellow-300}%minCost%<br>
 > <span>The argument set that is the minimum cost that is valid</span>{: 	.text-grey-dk-000 .fs-3 }
@@ -257,7 +257,7 @@ Then In the True of that If/Else (%cost%<%minCost%) add a set argument (To let t
 > Core > Arguments > Set Argument
 > 
 > <span>Variable Name:</span>{: .text-yellow-300} result<br>
-> <span>Name of the argument the action calling this action will use to see if the user's currency was actually adjusted</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Name of the argument the action calling this action will use to see if the viewer's currency was actually adjusted</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Value:</span>{: .text-yellow-300} False
 </details>
 
@@ -278,20 +278,20 @@ Then add another If/Else (To check if there is a message to show when below min 
 Then in the False of that If/Else send the message given{{ page.footnote3 }}<br><br>
 And finally add a Break after that If/Else since the cost was too little we don't wanna continue to adjust the currency.
 
-### 4. Check if user has enough currency
+### 4. Check if viewer has enough currency
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/basics/pay_currency_check_balance.png" width="500"><br>
-We need to check to see if the user has enough to pay to given cost (making it so users can't have negative currency).
+We need to check to see if the viewer has enough to pay to given cost (making it so viewers can't have negative currency).
 <details markdown="1">
 <summary>
-First we need to get the user's current balance which we can do by just using the action we created above. Add a Run Action.
+First we need to get the viewer's current balance which we can do by just using the action we created above. Add a Run Action.
 </summary>
 
 {: .subaction-title }
 > Core > Actions > Run Action
 >
 > <span>Action:</span>{: .text-yellow-300} Get Balance<br>
-> <span>The action we created above for getting a user's currency</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>The action we created above for getting a viewer's currency</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Run Action Immediately:</span>{: .text-yellow-300} Marked as On<br>
 > <span>Turn this on so the action is run inline with this action sharing arguments and waits until its done before continuing</span>{: 	.text-grey-dk-000 .fs-3 }
 </details>
@@ -305,10 +305,10 @@ Then we need to check their balance agasint the given cost. Add an If/Else
 > Core > Logic > If/Else
 >
 > <span>Input:</span>{: .text-yellow-300} %balance%<br>
-> <span>The argument that is the user's current currency amount. (this is set in the Get Balance action above so the name MUST match)</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
+> <span>The argument that is the viewer's current currency amount. (this is set in the Get Balance action above so the name MUST match)</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Operation:</span>{: .text-yellow-300} Less Than<br><br>
 > <span>Value:</span>{: .text-yellow-300} %cost%<br>
-> <span>The argument amount we want adjust the user's currency by.</span>{: 	.text-grey-dk-000 .fs-3 }
+> <span>The argument amount we want adjust the viewer's currency by.</span>{: 	.text-grey-dk-000 .fs-3 }
 </details>
 
 <details markdown="1">
@@ -320,39 +320,39 @@ In the True of that If/Else (%balance%<%cost%) add a set argument (To let the ac
 > Core > Arguments > Set Argument
 > 
 > <span>Variable Name:</span>{: .text-yellow-300} result<br>
-> <span>Name of the argument the action calling this action will use to see if the user's currency was actually adjusted</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Name of the argument the action calling this action will use to see if the viewer's currency was actually adjusted</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Value:</span>{: .text-yellow-300} False
 </details>
 
 <details markdown="1">
 <summary>
-Then add another If/Else (To check if there is a message to show when the user doesn't have enough currency for the cost)
+Then add another If/Else (To check if there is a message to show when the viewer doesn't have enough currency for the cost)
 </summary>
 
 {: .subaction-title }
 > Core > Logic > If/Else
 > 
 > <span>Input:</span>{: .text-yellow-300} tooPoorMessage<br>
-> <span>The argument set if the action calling wants to send a message when the cost is more than user's currency. Notice there is no % because we are using the Does not Exist Operation</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
+> <span>The argument set if the action calling wants to send a message when the cost is more than viewer's currency. Notice there is no % because we are using the Does not Exist Operation</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Operation:</span>{: .text-yellow-300} Does not Exist<br>
 > <span>Checks if the message was given</span>{: 	.text-grey-dk-000 .fs-3 }
 </details>
 
 Then in the False of that If/Else send the message given.{{ page.footnote3 }}<br><br>
 
-### 5. Adjust the user's currency
+### 5. Adjust the viewer's currency
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/basics/pay_currency_adjust_balance.png" width="500"><br>
 <details markdown="1">
 <summary>
-First add a Set Argument to the False of the If/Else at start of step 4 (%balance%<%cost%) (To let the action that called this action know we are actually changing the user's currency)
+First add a Set Argument to the False of the If/Else at start of step 4 (%balance%<%cost%) (To let the action that called this action know we are actually changing the viewer's currency)
 </summary>
 
 {: .subaction-title }
 > Core > Arguments > Set Argument
 > 
 > <span>Variable Name:</span>{: .text-yellow-300} result<br>
-> <span>Name of the argument the action calling this action will use to see if the user's currency was actually adjusted</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Name of the argument the action calling this action will use to see if the viewer's currency was actually adjusted</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Value:</span>{: .text-yellow-300} True
 </details>
 
@@ -381,13 +381,13 @@ Then in the True of tha If/Else (%redeemer%==True) add a Global (Set) (To adjust
 > <span>Destination:</span>{: .text-yellow-300} User (Redeemer)<br>
 > <span>Set to the redeemer{{ page.footnote2 }} of the calling action.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Persisted:</span>{: .text-yellow-300} Marked as On<br>
-> <span>On so the users currency doesn't reset when streamerbot closes</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
+> <span>On so the viewer's currency doesn't reset when streamerbot closes</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Variable Name:</span>{: .text-yellow-300} balance<br>
 > <span>The name of your variable for your currency. MUST match the name you used in the Get Balance action above.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Dropdown Box:</span>{: .text-yellow-300} Decrement<br>
-> <span>Set to subtract the cost from the user's currency as the default behavior.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
+> <span>Set to subtract the cost from the viewer's currency as the default behavior.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Decrement:</span>{: .text-yellow-300} %cost%<br>
-> <span>The argument that is the amount to actually adjust the user's by, set by the action calling this action.</span>{: 	.text-grey-dk-000 .fs-3 }
+> <span>The argument that is the amount to actually adjust the viewer's by, set by the action calling this action.</span>{: 	.text-grey-dk-000 .fs-3 }
 </details>
 
 <details markdown="1">
@@ -401,19 +401,19 @@ Then Inside the False of the same If/Else add another Global (Set) (To adjust th
 > <span>Destination:</span>{: .text-yellow-300} User (Target)<br>
 > <span>Set to the target{{ page.footnote1 }} of the calling action.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Persisted:</span>{: .text-yellow-300} Marked as On<br>
-> <span>On so the users currency doesn't reset when streamerbot closes</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
+> <span>On so the viewer's currency doesn't reset when streamerbot closes</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Variable Name:</span>{: .text-yellow-300} balance<br>
 > <span>The name of your variable for your currency. MUST match the name you used in the Get Balance action above.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Dropdown Box:</span>{: .text-yellow-300} Decrement<br>
-> <span>Set to subtract the cost from the user's currency as the default behavior.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
+> <span>Set to subtract the cost from the viewer's currency as the default behavior.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Decrement:</span>{: .text-yellow-300} %cost%<br>
-> <span>The argument that is the amount to actually adjust the user's by, set by the action calling this action.</span>{: 	.text-grey-dk-000 .fs-3 }
+> <span>The argument that is the amount to actually adjust the viewer's by, set by the action calling this action.</span>{: 	.text-grey-dk-000 .fs-3 }
 </details>
 
 ---
 
 ## Add Currency Command
-Command & Action for actually adjusting a user's currency for use by the streamer and possibly mods.
+Command & Action for actually adjusting a viewer's currency for use by the streamer and possibly mods.
 
 
 ### 1. Create Name of your Currency
@@ -461,7 +461,7 @@ Go to Commands and add a new command for adding currency.
 > <span>Mode:</span>{: .text-yellow-300} Regex<br>
 > <span>I recommend a regex for better command control but I will also explain how to adjust if you do normal instead</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Regex:</span>{: .text-yellow-300} ^ \*! \*(add\|give) \*(token\|money\|monie)s? \*@?(?\<target\>\S+) +(?\<amount\>(\\\+\|-)?\d{1,9})<br>
-> <span>Regex for getting the command and the user to add to and amount to add. Full breakdown below.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
+> <span>Regex for getting the command and the viewer to add to and amount to add. Full breakdown below.</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Explicit Capture</span>{: .text-yellow-300} Marked as On<br>
 > <span>Makes the regex only capture groups we have named or numbered</span>{: 	.text-grey-dk-000 .fs-3 } <br><br>
 > <span>Group</span>{: .text-yellow-300} Economy<br>
@@ -487,7 +487,7 @@ The Regular Expression Breakdown (And what to change for your currency name)
 > <span>s? \*</span>{: .text-yellow-300}<br>
 > <span>Allow an s after the currency name and any number of spaces</span>{: .text-grey-dk-000 .fs-3 } <br><br>
 > <span>@?(?\<target\>\S+) +</span>{: .text-yellow-300}<br>
-> <span>Captures any number of non-whitespace characters followed by one or more spaces not including a single leading @ if any. (aka, the user being targeted).</span>{: .text-grey-dk-000 .fs-3 } <br><br>
+> <span>Captures any number of non-whitespace characters followed by one or more spaces not including a single leading @ if any. (aka, the viewer being targeted).</span>{: .text-grey-dk-000 .fs-3 } <br><br>
 > <span>(?\<amount\>(\\\+\|-)?\d{1,9})</span>{: .text-yellow-300}<br>
 > <span>Captures 1 to 9 number digits that can have a +, -, or nothing in from of it. (aka the amount to add)</span>{: .text-grey-dk-000 .fs-3 }
 
@@ -533,12 +533,12 @@ Add a new Action for the add currency command
 
 Add Trigger to the action of the command created in step 2 through Core > Commands > Command Triggered
 
-### 4. Check if a valid user was given
+### 4. Check if a valid viewer was given
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/basics/add_currency_check_user.png" width="500"><br>
 <details markdown="1">
 <summary>
-Get the user for the target of the command. (I use Sub-Action Twitch -> User -> Get User Info For Target for a Twitch command but any Get User Info Sub-action should work){{ page.footnote4 }}
+Get the viewer for the target of the command. (I use Sub-Action Twitch -> User -> Get User Info For Target for a Twitch command but any Get User Info Sub-action should work){{ page.footnote4 }}
 </summary>
 
 {: .subaction-title }
@@ -558,15 +558,15 @@ Then add an If/Else to check if they exist.
 > Core > Logic > If/Else
 > 
 > <span>Input:</span>{: .text-yellow-300} %addTargetResult%<br>
-> <span>The variable given by Get User Info for Target that is true if a user was found</span>{: .text-grey-dk-000 .fs-3 }<br><br>
+> <span>The variable given by Get User Info for Target that is true if a viewer was found</span>{: .text-grey-dk-000 .fs-3 }<br><br>
 > <span>Operation:</span>{: .text-yellow-300} Equals<br><br>
 > <span>Value:</span>{: .text-yellow-300} True
 
 </details>
 
-Then in the false send a message{{ page.footnote3 }} that the user was not found if you want and Add a Break to stop since you can't add currency to an invalid user.
+Then in the false send a message{{ page.footnote3 }} that the viewer was not found if you want and Add a Break to stop since you can't add currency to an invalid viewer.
 
-### 5. Add the currency to the user
+### 5. Add the currency to the viewer
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/basics/add_currency_add_amount.png" width="500"><br>
 <details markdown="1">
@@ -599,14 +599,14 @@ Set Argument for the amount to add
 </details>
 <details markdown="1">
 <summary>
-Then finally run the action you made above (Pay Currency) to actually adjust the user's currency.
+Then finally run the action you made above (Pay Currency) to actually adjust the viewer's currency.
 </summary>
 
 {: .subaction-title }
 > Core > Actions > Run Action 
 > 
 > <span>Action:</span>{: .text-yellow-300} Pay Currency<br>
-> <span>The action you created above to adjust a user's currency.</span>{: .text-grey-dk-000 .fs-3 }<br><br>
+> <span>The action you created above to adjust a viewer's currency.</span>{: .text-grey-dk-000 .fs-3 }<br><br>
 > <span>Run Action Immediately:</span>{: .text-yellow-300} Marked as On<br>
 > <span>Run the action inline so it waits for completeion and gets the arguments from it</span>{: .text-grey-dk-000 .fs-3 }
 
@@ -638,14 +638,14 @@ Then in the True send a message{{ page.footnote3 }} that it succeded with any in
 
 <details markdown="1">
 <summary>
-First lets grab the new balance of the user by running our Get Balance Action
+First lets grab the new balance of the viewer by running our Get Balance Action
 </summary>
 
 {: .subaction-title }
 > Core > Actions > Run Action
 >
 > <span>Action:</span>{: .text-yellow-300} Get Balance<br>
-> <span>The action we created above for getting a user's currency</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>The action we created above for getting a viewer's currency</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Run Action Immediately:</span>{: .text-yellow-300} Marked as On<br>
 > <span>Turn this on so the action is run inline with this action sharing arguments and waits until its done before continuing</span>{: 	.text-grey-dk-000 .fs-3 }
 
@@ -660,7 +660,7 @@ Then Lets figure out if the new balance is singular or plural with an If/Else, a
 > Core > Logic > If/Else
 >
 > <span>Input:</span>{: .text-yellow-300} %balance%<br>
-> <span>The new balance of the user</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>The new balance of the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Operation</span>{: .text-yellow-300} Equals<br><br>
 > <span>Value</span>{: .text-yellow-300} 1
 
@@ -671,7 +671,7 @@ Then Lets figure out if the new balance is singular or plural with an If/Else, a
 > Core > Arguments > Set Argument
 >
 > <span>Variable Name:</span>{: .text-yellow-300} newCurrencyName<br>
-> <span>Unquie name for the word to use for the user's current balance.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Unquie name for the word to use for the viewer's current balance.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Value:</span>{: .text-yellow-300} ~currencyName~<br>
 > <span>The global variable set to the singular name of your currency</span>{: 	.text-grey-dk-000 .fs-3 }
 
@@ -682,7 +682,7 @@ Then Lets figure out if the new balance is singular or plural with an If/Else, a
 > Core > Arguments > Set Argument
 >
 > <span>Variable Name:</span>{: .text-yellow-300} newCurrencyName<br>
-> <span>Unquie name for the word to use for the user's current balance.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Unquie name for the word to use for the viewer's current balance.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Value:</span>{: .text-yellow-300} ~currencyNamePlural~<br>
 > <span>The global variable set to the plural name of your currency</span>{: 	.text-grey-dk-000 .fs-3 }
 
@@ -697,7 +697,7 @@ Then Lets repeat that but for the amount being added to find out if its plural o
 > Core > Logic > If/Else
 >
 > <span>Input:</span>{: .text-yellow-300} %amount%<br>
-> <span>The amount being added to the user's currency</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>The amount being added to the viewer's currency</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Operation</span>{: .text-yellow-300} Equals<br><br>
 > <span>Value</span>{: .text-yellow-300} 1
 
@@ -727,20 +727,20 @@ Then Lets repeat that but for the amount being added to find out if its plural o
 
 <details markdown="1">
 <summary>
-Next get the user's pronouns and set an argument for if they use has/have (since it doesn't store that one automatically).
+Next get the viewer's pronouns and set an argument for if they use has/have (since it doesn't store that one automatically).
 </summary>
 
 {: .subaction-title }
 > Integrations > Pronouns > Add Pronouns for User
 >
 > <span>User Login:</span>{: .text-yellow-300} %target%<br>
-> <span>The user being targeted by the command. If you did a normal command instead of regex this should be %input0% for the first input of the command</span>{: 	.text-grey-dk-000 .fs-3 }
+> <span>The viewer being targeted by the command. If you did a normal command instead of regex this should be %input0% for the first input of the command</span>{: 	.text-grey-dk-000 .fs-3 }
 
 {: .subaction-title }
 > Core > Logic > If/Else
 >
 > <span>Input:</span>{: .text-yellow-300} %pronounCurrentTenseLower%<br>
-> <span>Variable that stores if the user's pronouns use 'are' or 'is'.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Variable that stores if the viewer's pronouns use 'are' or 'is'.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Operation</span>{: .text-yellow-300} Equals<br><br>
 > <span>Value</span>{: .text-yellow-300} are<br>
 > <span>Check agasint 'are' because if they use 'are' then they use 'have' and if not they use 'has'</span>{: 	.text-grey-dk-000 .fs-3 }
@@ -785,7 +785,7 @@ which could result in this for example:
 ---
 
 ## Add Show Balance Command
-Command & Action for a user to see their own amount of currency
+Command & Action for a viewer to see their own amount of currency
 
 ### 1. Create Command for Showing currency
 {: .no_toc }
@@ -793,7 +793,7 @@ Command & Action for a user to see their own amount of currency
 
 <details markdown="1">
 <summary>
-First go to Commands and Add a new command for showing a user's amount of currency.
+First go to Commands and Add a new command for showing a viewer's amount of currency.
 </summary>
 
 {: .subaction-title }
@@ -804,7 +804,7 @@ First go to Commands and Add a new command for showing a user's amount of curren
 > <span>Mode</span>{: .text-yellow-300} Normal<br>
 > <span>Since this is a very simple command there is no benefit to Regex</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Command(s)</span>{: .text-yellow-300} !balance<br>
-> <span>Commands you want users to type in to see their current currency</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Commands you want viewers to type in to see their current currency</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Group</span>{: .text-yellow-300} Economy<br>
 > <span>Name of group the command is in. I recommend putting it in the same group as your other economy commands</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Grant Type</span>{: .text-yellow-300} Allow<br>
@@ -860,13 +860,13 @@ Then simply run the Get Balance Action created above to get their amount of curr
 > Core > Actions > Run Action
 >
 > <span>Action:</span>{: .text-yellow-300} Get Balance<br>
-> <span>The name of the action created above to get the amount of currency a user has.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>The name of the action created above to get the amount of currency a viewer has.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Run Action Immediately</span>{: .text-yellow-300} Marked As On<br>
 > <span>Marked on to run inline and wait until down getting the arguments from it</span>{: 	.text-grey-dk-000 .fs-3 }
 
 </details>
 
-### 4. Send message with the user's currency
+### 4. Send message with the viewer's currency
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/basics/show_balance_send_balance.png" width="500"><br>
 Send a message[<sup>3</sup>](#footnotes4) to whatever platform you want with the balance you got in step 4.
@@ -880,7 +880,7 @@ For an example first get if the balance is singular or plural by adding an If/El
 > Core > Logic > If/Else
 >
 > <span>Input:</span>{: .text-yellow-300} %balance%<br>
-> <span>The new balance of the user</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>The new balance of the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Operation</span>{: .text-yellow-300} Equals<br><br>
 > <span>Value</span>{: .text-yellow-300} 1
 
@@ -891,7 +891,7 @@ For an example first get if the balance is singular or plural by adding an If/El
 > Core > Arguments > Set Argument
 >
 > <span>Variable Name:</span>{: .text-yellow-300} currencyName<br>
-> <span>Unquie name for the word to use for the user's current balance.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Unquie name for the word to use for the viewer's current balance.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Value:</span>{: .text-yellow-300} ~currencyName~<br>
 > <span>The global variable set to the singular name of your currency</span>{: 	.text-grey-dk-000 .fs-3 }
 
@@ -902,7 +902,7 @@ For an example first get if the balance is singular or plural by adding an If/El
 > Core > Arguments > Set Argument
 >
 > <span>Variable Name:</span>{: .text-yellow-300} currencyName<br>
-> <span>Unquie name for the word to use for the user's current balance.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Unquie name for the word to use for the viewer's current balance.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Value:</span>{: .text-yellow-300} ~currencyNamePlural~<br>
 > <span>The global variable set to the plural name of your currency</span>{: 	.text-grey-dk-000 .fs-3 }
 
@@ -1002,7 +1002,7 @@ Setup command for showing balance. Edit Balance Command
 
 <details markdown="1">
 <summary>
-Setup command for adding currency to users. Edit Add Currency Command
+Setup command for adding currency to viewers. Edit Add Currency Command
 </summary>
 
 {: .subaction-title }
@@ -1020,9 +1020,9 @@ Setup command for adding currency to users. Edit Add Currency Command
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/basics/premade_messages.png" width="500"><br>
 Look for blue comments that start with "\/ Message" for places for messages to change. This extension has these ones:<br>
-* Message showing user's balance for Balance Command (in Show Balance Action)
-* Message for when Add Currency command is given an invalid user (in Add Currency)
-* Message for when Add Currency adjusts a users currency (in Add Currency)
+* Message showing viewer's balance for Balance Command (in Show Balance Action)
+* Message for when Add Currency command is given an invalid viewer (in Add Currency)
+* Message for when Add Currency adjusts a viewer's currency (in Add Currency)
 * Message for if an invalid number was put into the Add Currency Command (in Add Currency, only if using normal instead of regex for Add Currency Command)
 
 ## 5. (OPTIONAL) Change to another platform than twitch
