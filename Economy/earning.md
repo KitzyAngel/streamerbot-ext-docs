@@ -7,7 +7,7 @@ nav_order: 2
 footnote1: <a href="#footnotes1" title='You can always just send a message through twitch or whatever platform you want but I use another action called Send Message Explained on the Send Message page, for compability with other extensions and platforms.'><sup>1</sup></a>
 footnote2: <a href="#footnotes2" title="The Pay Currency and Get Balance Actions are created in my Economy Basics Tutorial/Extension. Feel free to use any other way for adjusting currency and getting a viewer's balance if you have a different existing implementation."><sup>2</sup></a>
 
-last_modified_date: 2/10/2026
+last_modified_date: 4/10/2026
 ---
 
 # Earning Currency
@@ -123,7 +123,7 @@ Add a new action for when someone redeems your channel point redeems.
 <img src="{{ site.baseurl }}/img/Economy/earning/exchange_give_currency.png" width="500"><br>
 
 <details markdown="1">
-<summary>Set arugments for Pay Currency Action{{ page.footnote2 }} and then Call it to adjust the viewer's currency.</summary>
+<summary>Set arguments for Pay Currency Action{{ page.footnote2 }} and then Call it to adjust the viewer's currency.</summary>
 
 {: .subaction-title }
 > Core > Arguments > Set Argument
@@ -131,7 +131,7 @@ Add a new action for when someone redeems your channel point redeems.
 > <span>Variable Name:</span>{: .text-yellow-300} redeemer<br>
 > <span>The name of the variable pay currency wants to know to adjust the redeemer.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Value:</span>{: .text-yellow-300} True<br>
-> <span>Set to True since we want to give the currency to the person who redeemed the redeem.</span>{: 	.text-grey-dk-000 .fs-3 }
+> <span>Set to True since we want to give the currency to the viewer who triggered the action.</span>{: 	.text-grey-dk-000 .fs-3 }
 
 {: .subaction-title }
 > Core > Arguments > Set Argument
@@ -184,9 +184,6 @@ Add a new action for when someone redeems your channel point redeems.
 
 </details>
 
-
-
-
 ---
 
 ## Check In Redeem
@@ -222,7 +219,7 @@ You can create the reward on twitch or through streamerbot itself. I recommend t
 Add a new action for when someone checks in.
 
 <details markdown="1">
-<summary>Then add a Trigger the check in channel point redeem</summary>
+<summary>Then add a Trigger for the check in channel point redeem</summary>
 
 {: .subaction-title }
 > Twitch > Channel Reward > Reward Redemption
@@ -237,7 +234,7 @@ Add a new action for when someone checks in.
 <img src="{{ site.baseurl }}/img/Economy/earning/check_in_give_currency.png" width="500"><br>
 
 <details markdown="1">
-<summary>Set arugments for Pay Currency Action{{ page.footnote2 }} and then Call it to adjust the viewer's currency.</summary>
+<summary>Set arguments for Pay Currency Action{{ page.footnote2 }} and then Call it to adjust the viewer's currency.</summary>
 
 
 {: .subaction-title }
@@ -254,7 +251,7 @@ Add a new action for when someone checks in.
 > <span>Variable Name:</span>{: .text-yellow-300} redeemer<br>
 > <span>The name of the variable pay currency wants to know to adjust the redeemer.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
 > <span>Value:</span>{: .text-yellow-300} True<br>
-> <span>Set to True since we want to give the currency to the person who redeemed the redeem.</span>{: 	.text-grey-dk-000 .fs-3 }
+> <span>Set to True since we want to give the currency to the viewer who triggered the action.</span>{: 	.text-grey-dk-000 .fs-3 }
 
 {: .subaction-title }
 > Core > Arguments > Set Argument
@@ -343,22 +340,835 @@ Add a new action for when someone checks in.
 ---
 
 ## Subscription/Resubscription
+You can allow viewers to earn your currency by subscribing and resubscribing 
+
+### 1. Create Action & Add triggers
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/sub_add_action.png" width="500"><br>
+Add a new action for when someone subscribes or resubscribes
+
+<details markdown="1">
+<summary>Then add a Trigger for both subscriptions & resubscriptions.</summary>
+
+{: .subaction-title }
+> Twitch > Subscriptions > Subscription
+
+{: .subaction-title }
+> Twitch > Subscriptions > Resubscription
+
+</details>
+
+### 2. Get the amount of currency to give the viewer
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/sub_get_amount.png" width="500"><br>
+<details markdown="1">
+<summary>Add a Switch/Case to figure out which tier the viewer subbed with</summary>
+
+{: .subaction-title }
+> Core > Logic > Switch
+>
+> <span>Input:</span>{: .text-yellow-300} %tier%<br>
+> <span>The tier of the sub, set by streamerbot from twitch.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+#### case (prime, tier1)
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} amount <br>
+> <span>Name for variable for how much we going to give the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} 100<br>
+> <span>The amount of currency to give the viewer when they sub or resub at prime & tier 1 subs.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+#### case (tier2)
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} amount <br>
+> <span>Name for variable for how much we going to give the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} 200<br>
+> <span>The amount of currency to give the viewer when they sub or resub at tier 2 subs.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+#### case (tier3)
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} amount <br>
+> <span>Name for variable for how much we going to give the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} 300<br>
+> <span>The amount of currency to give the viewer when they sub or resub at tier 3 subs.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+### 3. Actually give the viewer the Currency
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/exchange_give_currency.png" width="500"><br>
+
+<details markdown="1">
+<summary>Set arguments for Pay Currency Action{{ page.footnote2 }} and then Call it to adjust the viewer's currency.</summary>
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} redeemer<br>
+> <span>The name of the variable pay currency wants to know to adjust the redeemer.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} True<br>
+> <span>Set to True since we want to give the currency to the viewer who triggered the action.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} cost<br>
+> <span>The name of the variable pay currency wants to know how much to adjust the viewer's currency by.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} -%amount%<br>
+> <span>The amount to give the viewer. We set it to negative because pay currency decrements, so we "pay" a negative to give currency.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Actions > Run Action
+>
+> <span>Action:</span>{: .text-yellow-300} Pay Currency<br>
+> <span>The action for actually adjusting a viewer's currency</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+### 4. (OPTIONAL) Get info for and send a message with new viewer balance
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/sub_send_message.png" width="500"><br>
+
+<details markdown="1">
+<summary>Get the new balance of the viewer using the Get Balance Action{{ page.footnote2 }}.</summary>
+
+{: .subaction-title }
+> Core > Actions > Run Action
+>
+> <span>Action:</span>{: .text-yellow-300} Get Balance<br>
+> <span>The action for getting the current balance of the viewer. We don't need to set redeemer again cuz we set it earlier for the pay currency action</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+<details markdown="1">
+<summary>Actually send the message by setting argument for the message and using a send message action.{{ page.footnote1 }}</summary>
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} message<br>
+> <span>The name of the variable for the send message action to know what message to send.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} Thank you %user% for the %tier% sub! You earned %amount% ~currencyNamePlural~! Your current ~currencyName~ balance is %balance%<br>
+> <span>The actual message to send. The example shows how to use a bunch of variables for a custom message. (Note, using ~ for global variables and % for local ones)</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Actions > Run Action
+>
+> <span>Action:</span>{: .text-yellow-300} \[KA\] Send Message<br>
+> <span>The action for actually sending a message</span>{: 	.text-grey-dk-000 .fs-3 }
+
+
+</details>
 
 ---
 
 ## Gift Subscriptions
+You can allow viewers to earn your currency by gifting subscriptions
+
+### 1. Create Action & Add triggers
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/gift_add_action.png" width="500"><br>
+Add a new action for when someone gifts subscriptions
+
+<details markdown="1">
+<summary>Then add a Triggers for gifting one sub and many subs.</summary>
+
+{: .subaction-title }
+> Twitch > Subscriptions > Gift Bomb
+>
+> <span>Anonymous:</span>{: .text-yellow-300} Marked as Off<br>
+> <span>Mark anonymous as off so anonymous gifts won't trigger this action since we don't know who gifted so can't give them currency.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Twitch > Subscriptions > Gift Subscription
+>
+> <span>Anonymous:</span>{: .text-yellow-300} Marked as Off<br>
+> <span>Mark anonymous as off so anonymous gifts won't trigger this action since we don't know who gifted so can't give them currency.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+### 2. Check for Gift subs in a bomb 
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/gift_check_bomb.png" width="500"><br>
+We need to ignore any single gift subs that are part of a bomb because we are handling gift bombs as well.
+
+<details markdown="1">
+<summary>So we add a If/Else to check for a single gift sub from a gift bomb.</summary>
+
+{: .subaction-title }
+> Core > Logic > If/Else
+>
+> <span>Input:</span>{: .text-yellow-300} %fromGiftBomb%<br>
+> <span>Variable streamerbot uses to tell us a single gift sub is from a bomb</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Operation</span>{: .text-yellow-300} Equals<br><br>
+> <span>Value</span>{: .text-yellow-300} True
+
+#### True (aka Gift sub from bomb)
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Logic > Break
+>
+> <span>Just end the action since we are handling these subs as part of the whole gift bomb.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+### 3. Get the amount of currency to give the viewer
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/gift_get_amount.png" width="500"><br>
+<details markdown="1">
+<summary>Add a Switch/Case to figure out which tier the viewer gifted subs of</summary>
+
+{: .subaction-title }
+> Core > Logic > Switch
+>
+> <span>Input:</span>{: .text-yellow-300} %tier%<br>
+> <span>The tier of the gift sub, set by streamerbot from twitch.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+#### case (tier1)
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} amount <br>
+> <span>Name for variable for how much we going to give the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} 75<br>
+> <span>The amount of currency to give the viewer when they gift tier 1 subs.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+#### case (tier2)
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} amount <br>
+> <span>Name for variable for how much we going to give the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} 150<br>
+> <span>The amount of currency to give the viewer when they gift tier 2 subs.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+#### case (tier3)
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} amount <br>
+> <span>Name for variable for how much we going to give the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} 225<br>
+> <span>The amount of currency to give the viewer when they gift tier 3 subs.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+
+### 3. Adjust the amount by number of subs or months
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/gift_adjust_amount.png" width="500"><br>
+We want to give currency for every month gifted and for every sub gifted in a bomb so we need to handle both.
+
+<details markdown="1">
+<summary>So add a If/Else to check for multiple gift subs</summary>
+
+{: .subaction-title }
+> Core > Logic > If/Else
+>
+> <span>Input:</span>{: .text-yellow-300} gifts<br>
+> <span>Name of the variable streamerbot uses to tell us how many subs gifted in a bomb. (NOTE not using % because we are checking if it exists)</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Operation</span>{: .text-yellow-300} Does Not Exist
+
+#### True (aka a single gift sub)
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} amount <br>
+> <span>Name for variable for how much we going to give the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} $math(%amount%\*%monthsGifted%)$<br>
+> <span>Simple inline math to multiple the amount we are giving the viewer by the number of months they are gifting.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+#### False (aka a gift bomb)
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} amount <br>
+> <span>Name for variable for how much we going to give the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} $math(%amount%\*%gifts%)$<br>
+> <span>Simple inline math to multiple the amount we are giving the viewer by the number of subs they are gifting.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+
+### 4. Actually give the viewer the Currency
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/exchange_give_currency.png" width="500"><br>
+
+<details markdown="1">
+<summary>Set arguments for Pay Currency Action{{ page.footnote2 }} and then Call it to adjust the viewer's currency.</summary>
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} redeemer<br>
+> <span>The name of the variable pay currency wants to know to adjust the redeemer.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} True<br>
+> <span>Set to True since we want to give the currency to the viewer who triggered the action.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} cost<br>
+> <span>The name of the variable pay currency wants to know how much to adjust the viewer's currency by.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} -%amount%<br>
+> <span>The amount to give the viewer. We set it to negative because pay currency decrements, so we "pay" a negative to give currency.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Actions > Run Action
+>
+> <span>Action:</span>{: .text-yellow-300} Pay Currency<br>
+> <span>The action for actually adjusting a viewer's currency</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+### 5. (OPTIONAL) Get info for and send a message with new viewer balance
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/gift_send_message.png" width="500"><br>
+
+<details markdown="1">
+<summary>Get the new balance of the viewer using the Get Balance Action{{ page.footnote2 }}.</summary>
+
+{: .subaction-title }
+> Core > Actions > Run Action
+>
+> <span>Action:</span>{: .text-yellow-300} Get Balance<br>
+> <span>The action for getting the current balance of the viewer. We don't need to set redeemer again cuz we set it earlier for the pay currency action</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+<details markdown="1">
+<summary>Add an If/Else to check a single gift sub or multiple</summary>
+
+{: .subaction-title }
+> Core > Logic > If/Else
+>
+> <span>Input:</span>{: .text-yellow-300} gifts<br>
+> <span>Name of the variable streamerbot uses to tell us how many subs gifted in a bomb. (NOTE not using % because we are checking if it exists)</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Operation</span>{: .text-yellow-300} Does Not Exist
+
+#### True (aka a single gift sub)
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} numGiftMessage <br>
+> <span>Name for a variable to have different text for one or multiple gift subs.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} a sub<br>
+> <span>Text for when one sub is gifted</span>{: 	.text-grey-dk-000 .fs-3 }
+
+#### False (aka a gift bomb)
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} numGiftMessage <br>
+> <span>Name for a variable to have different text for one or multiple gift subs.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} %gifts% subs<br>
+> <span>Text for when multiple subs are gifted using the number of subs</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+<details markdown="1">
+<summary>Actually send the message by setting argument for the message and using a send message action.{{ page.footnote1 }}</summary>
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} message<br>
+> <span>The name of the variable for the send message action to know what message to send.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} Thank you %user% for gifting %numGiftMessage%! You earned %amount% ~currencyNamePlural~! Your current ~currencyName~ balance is %balance%<br>
+> <span>The actual message to send. The example shows how to use a bunch of variables for a custom message. (Note, using ~ for global variables and % for local ones)</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Actions > Run Action
+>
+> <span>Action:</span>{: .text-yellow-300} \[KA\] Send Message<br>
+> <span>The action for actually sending a message</span>{: 	.text-grey-dk-000 .fs-3 }
+
+
+</details>
 
 ---
 
 ## Watch Streak
+You can allow viewers to earn your currency by getting twitch watch streaks.
+
+### 1. Create Action & Add trigger
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/streak_add_action.png" width="500"><br>
+Add a new action for when someone gets a watch streak.
+
+<details markdown="1">
+<summary>Then add a Trigger for a Watch Streak</summary>
+
+{: .subaction-title }
+> Twitch > Chat > Watch Streak
+
+</details>
+
+### 2. Get the amount of currency to give the viewer
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/streak_get_amount.png" width="500"><br>
+<details markdown="1">
+<summary>Set an argument to the amount we want to give viewer, calculated from the number of the watch streak.</summary>
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} amount<br>
+> <span>The name of the variable to store the amount we want to give the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} $math(if(%watchStreak% # 50 == 0, 100, 10))$<br>
+> <span>The actual amount to give the viewer. Using an inline math we can make it give 100 currency when its a watch streak divisible by 50 and otherwise it gives 10 currency.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+### 3. Actually give the viewer the Currency
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/exchange_give_currency.png" width="500"><br>
+
+<details markdown="1">
+<summary>Set arguments for Pay Currency Action{{ page.footnote2 }} and then Call it to adjust the viewer's currency.</summary>
+
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} amount<br>
+> <span>The name of the variable to store the amount we want to give the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} 50<br>
+> <span>The actual amount to give the viewer.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} redeemer<br>
+> <span>The name of the variable pay currency wants to know to adjust the redeemer.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} True<br>
+> <span>Set to True since we want to give the currency to the viewer who triggered the action.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} cost<br>
+> <span>The name of the variable pay currency wants to know how much to adjust the viewer's currency by.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} -%amount%<br>
+> <span>The amount to give the viewer. We set it to negative because pay currency decrements, so we "pay" a negative to give currency.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Actions > Run Action
+>
+> <span>Action:</span>{: .text-yellow-300} Pay Currency<br>
+> <span>The action for actually adjusting a viewer's currency</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+### 4. (OPTIONAL) Get info for and send a message with new viewer balance
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/streak_send_message.png" width="500"><br>
+
+<details markdown="1">
+<summary>Get the new balance of the viewer using the Get Balance Action{{ page.footnote2 }}.</summary>
+
+{: .subaction-title }
+> Core > Actions > Run Action
+>
+> <span>Action:</span>{: .text-yellow-300} Get Balance<br>
+> <span>The action for getting the current balance of the viewer. We don't need to set redeemer again cuz we set it earlier for the pay currency action</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+<details markdown="1">
+<summary>Actually send the message by setting argument for the message and using a send message action.{{ page.footnote1 }}</summary>
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} message<br>
+> <span>The name of the variable for the send message action to know what message to send.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} Thank you %user% for the %watchStreak%! You earned %amount% ~currencyNamePlural~! Your current ~currencyName~ balance is %balance%<br>
+> <span>The actual message to send. The example shows how to use a bunch of variables for a custom message. (Note, using ~ for global variables and % for local ones)</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Actions > Run Action
+>
+> <span>Action:</span>{: .text-yellow-300} \[KA\] Send Message<br>
+> <span>The action for actually sending a message</span>{: 	.text-grey-dk-000 .fs-3 }
+
+
+</details>
 
 ---
 
 ## Using Bits
+You can allow viewers to earn your currency by using bits.
+
+### 1. Create Action & Add trigger
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/bits_add_action.png" width="500"><br>
+Add a new action for when someone uses bits.
+
+<details markdown="1">
+<summary>Then add a Trigger for using Bits</summary>
+
+{: .subaction-title }
+> Twitch > Chat > Cheer
+
+</details>
+
+### 2. Get the amount of currency to give the viewer
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/bits_get_amount.png" width="500"><br>
+<details markdown="1">
+<summary>Set an argument to the amount we want to give viewer, calculated from the bits used.</summary>
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} amount<br>
+> <span>The name of the variable to store the amount we want to give the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} $math(%bits%\10+1)$<br>
+> <span>The actual amount to give the viewer. Using an inline math we can make it give 1 currency for every 10 bits used plus 1 so it always gives something. (Note the use of \ instead of / to do integer math, meaning it gets rid of any decimals)</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+### 3. Actually give the viewer the Currency
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/exchange_give_currency.png" width="500"><br>
+
+<details markdown="1">
+<summary>Set arguments for Pay Currency Action{{ page.footnote2 }} and then Call it to adjust the viewer's currency.</summary>
+
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} amount<br>
+> <span>The name of the variable to store the amount we want to give the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} 50<br>
+> <span>The actual amount to give the viewer.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} redeemer<br>
+> <span>The name of the variable pay currency wants to know to adjust the redeemer.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} True<br>
+> <span>Set to True since we want to give the currency to the viewer who triggered the action.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} cost<br>
+> <span>The name of the variable pay currency wants to know how much to adjust the viewer's currency by.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} -%amount%<br>
+> <span>The amount to give the viewer. We set it to negative because pay currency decrements, so we "pay" a negative to give currency.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Actions > Run Action
+>
+> <span>Action:</span>{: .text-yellow-300} Pay Currency<br>
+> <span>The action for actually adjusting a viewer's currency</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+### 4. (OPTIONAL) Get info for and send a message with new viewer balance
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/bits_send_message.png" width="500"><br>
+
+<details markdown="1">
+<summary>Get the new balance of the viewer using the Get Balance Action{{ page.footnote2 }}.</summary>
+
+{: .subaction-title }
+> Core > Actions > Run Action
+>
+> <span>Action:</span>{: .text-yellow-300} Get Balance<br>
+> <span>The action for getting the current balance of the viewer. We don't need to set redeemer again cuz we set it earlier for the pay currency action</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+<details markdown="1">
+<summary>Determine if a single bit or multiple were used. Then store a variable for singular or plural number of bits.</summary>
+
+{: .subaction-title }
+> Core > Logic > If/Else
+>
+> <span>Input:</span>{: .text-yellow-300} %bits%<br>
+> <span>The number of bits the viewer used, tracked by streamerbot for us.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Operation</span>{: .text-yellow-300} Equals<br><br>
+> <span>Value</span>{: .text-yellow-300} 1
+
+#### True (aka Singular)
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} bitName <br>
+> <span>Unquie name for the word to use for number of bits used</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} bit
+
+#### False (aka Plural)
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} bitName <br>
+> <span>Unquie name for the word to use for number of bits used</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} bits
+
+</details>
+
+<details markdown="1">
+<summary>Determine if the amount being given to the viewer is singular or plural. Then store a variable for singular or plural amount.</summary>
+
+{: .subaction-title }
+> Core > Logic > If/Else
+>
+> <span>Input:</span>{: .text-yellow-300} %amount%<br>
+> <span>The amount we gave to the viewer of currency.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Operation</span>{: .text-yellow-300} Equals<br><br>
+> <span>Value</span>{: .text-yellow-300} 1
+
+#### True (aka Singular)
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} amountName <br>
+> <span>Unquie name for the word to use for the amount of currency we gave to the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value</span>{: .text-yellow-300} ~currencyName~<br>
+> <span>The global variable for singular currency</span>{: 	.text-grey-dk-000 .fs-3 }
+
+#### False (aka Plural)
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} amountName <br>
+> <span>Unquie name for the word to use for the amount of currency we gave to the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value</span>{: .text-yellow-300} ~currencyNamePlural~<br>
+> <span>The global variable for plural currency</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+<details markdown="1">
+<summary>Determine if the new balance of the viewer is singular or plural. Then store a variable for singular or plural balance.</summary>
+
+{: .subaction-title }
+> Core > Logic > If/Else
+>
+> <span>Input:</span>{: .text-yellow-300} %balance%<br>
+> <span>The current balance of the viewer's currency.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Operation</span>{: .text-yellow-300} Equals<br><br>
+> <span>Value</span>{: .text-yellow-300} 1
+
+#### True (aka Singular)
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} balanceName <br>
+> <span>Unquie name for the word to use for the balance of the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value</span>{: .text-yellow-300} ~currencyName~<br>
+> <span>The global variable for singular currency</span>{: 	.text-grey-dk-000 .fs-3 }
+
+#### False (aka Plural)
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} balanceName <br>
+> <span>Unquie name for the word to use for the balance of the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value</span>{: .text-yellow-300} ~currencyNamePlural~<br>
+> <span>The global variable for plural currency</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+<details markdown="1">
+<summary>Actually send the message by setting argument for the message and using a send message action.{{ page.footnote1 }}</summary>
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} message<br>
+> <span>The name of the variable for the send message action to know what message to send.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} Thank you %user% for the %bits% %bitName%! You have earned %amount% %amountName% <3 You now have %balance% %balanceName%<br>
+> <span>The actual message to send. The example shows how to use a bunch of variables for a custom message. (Note, using ~ for global variables and % for local ones)</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Actions > Run Action
+>
+> <span>Action:</span>{: .text-yellow-300} \[KA\] Send Message<br>
+> <span>The action for actually sending a message</span>{: 	.text-grey-dk-000 .fs-3 }
+
+
+</details>
+
 
 ---
 
 ## Raiding
+You can allow viewers to earn your currency by raiding.
+
+### 1. Create Action & Add trigger
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/raid_add_action.png" width="500"><br>
+Add a new action for when someone raids.
+
+<details markdown="1">
+<summary>Then add a Trigger for raids</summary>
+
+{: .subaction-title }
+> Twitch > Raid > Raid
+>
+> <span>Min:</span>{: .text-yellow-300} 1<br>
+> <span>The min number of people in a raid to get currency. (Set this if you are worried about people spaming small raids for currency)</span>{: 	.text-grey-dk-000 .fs-3 } 
+
+</details>
+
+### 2. Give the viewer the Currency
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/raid_give_currency.png" width="500"><br>
+
+<details markdown="1">
+<summary>Set arguments for Pay Currency Action{{ page.footnote2 }} and then Call it to adjust the viewer's currency.</summary>
+
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} amount<br>
+> <span>The name of the variable to store the amount we want to give the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} 100<br>
+> <span>The actual amount to give the viewer.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} redeemer<br>
+> <span>The name of the variable pay currency wants to know to adjust the redeemer.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} True<br>
+> <span>Set to True since we want to give the currency to the viewer who triggered the action.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} cost<br>
+> <span>The name of the variable pay currency wants to know how much to adjust the viewer's currency by.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} -%amount%<br>
+> <span>The amount to give the viewer. We set it to negative because pay currency decrements, so we "pay" a negative to give currency.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Actions > Run Action
+>
+> <span>Action:</span>{: .text-yellow-300} Pay Currency<br>
+> <span>The action for actually adjusting a viewer's currency</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+### 3. (OPTIONAL) Get info for and send a message with new viewer balance
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/raid_send_message.png" width="500"><br>
+
+<details markdown="1">
+<summary>Get the new balance of the viewer using the Get Balance Action{{ page.footnote2 }}.</summary>
+
+{: .subaction-title }
+> Core > Actions > Run Action
+>
+> <span>Action:</span>{: .text-yellow-300} Get Balance<br>
+> <span>The action for getting the current balance of the viewer. We don't need to set redeemer again cuz we set it earlier for the pay currency action</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+<details markdown="1">
+<summary>Get the pronouns of the viewer using the built-in integration and an If/Else for knowing if to use Has or Have.</summary>
+
+{: .subaction-title }
+> Integrations > Pronouns > Add Pronouns for User
+>
+> <span>User Login:</span>{: .text-yellow-300} %user%<br>
+> <span>The viewer to get the pronouns of.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Logic > If/Else
+>
+> <span>Input:</span>{: .text-yellow-300} %pronounCurrentTenseLower%<br>
+> <span>If the viewer should have "are" or "is" used with their pronouns.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Operation</span>{: .text-yellow-300} Equals<br><br>
+> <span>Value</span>{: .text-yellow-300} are<br>
+> <span>Check to see if they use "are" because then we should use "have" (or use "has" if they use "is").</span>{: 	.text-grey-dk-000 .fs-3 }
+
+#### True (aka uses "are")
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} pronounHas <br>
+> <span>Unquie name for the variable to use for has/have</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} have
+
+#### False (aka uses "is")
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} pronounHas <br>
+> <span>Unquie name for the variable to use for has/have</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} has
+
+</details>
+
+<details markdown="1">
+<summary>Actually send the message by setting argument for the message and using a send message action.{{ page.footnote1 }}</summary>
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} message<br>
+> <span>The name of the variable for the send message action to know what message to send.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} %user% has earned %amount% ~currencyNamePlural~ for raiding \<3 %pronounSubject% now %pronounHas% %balance% ~currencyNamePlural~<br>
+> <span>The actual message to send. The example shows how to use a bunch of variables for a custom message. (Note, using ~ for global variables and % for local ones)</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Actions > Run Action
+>
+> <span>Action:</span>{: .text-yellow-300} \[KA\] Send Message<br>
+> <span>The action for actually sending a message</span>{: 	.text-grey-dk-000 .fs-3 }
+
+
+</details>
 
 ---
 
