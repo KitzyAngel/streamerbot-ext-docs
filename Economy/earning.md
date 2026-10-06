@@ -1405,7 +1405,7 @@ First we want to make sure the message sent wasn't a command so we don't include
 {: .subaction-title }
 > Core > Logic > Break
 >
-> <span>End the action early if its a command since we don't wanna count it.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>End the action early if its a command since we don't wanna count it.</span>{: 	.text-grey-dk-000 .fs-3 }
 
 </details>
 
@@ -1513,7 +1513,156 @@ In the true of the If/Else we want to give them currency because they have sent 
 ---
 
 ## By Watch Time (REQUIRES C# Code)
+You can allow viewers to earn currency by just hanging out in your stream. WARNING: This requires C# code & is dependent on Twitch's ablity to know who's in the stream which is famously inconsistent. 
 
+### 1. Turn on Present Viewers
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/watch_time_present_viewers.png" width="500"><br>
+We need to tell streamerbot to track who is active in stream first.
+
+<details markdown="1">
+<summary>On the Left go to Platforms -> Twitch (Or whatever platform you want) -> Settings -> Present Viewers</summary>
+
+{: .subaction-title }
+> Platforms > Twitch > Settings > Present Viewers
+>
+> <span>Enabled:</span>{: .text-yellow-300} Marked as On<br>
+> <span>Turn on to allow streamerbot to track who is in your chat</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Live Update:</span>{: .text-yellow-300} Marked as On<br>
+> <span>Make streamerbot use actual viewers instead of fake ones (only for Twitch).</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Update Interval:</span>{: .text-yellow-300} 10 minutes<br>
+> <span>How often to check who is still in chat. (Keep in mind this will be how often you give currency).</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+### 1. Create Action & Add triggers
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/watch_time_add_action.png" width="500"><br>
+
+<details markdown="1">
+<summary>Add a new action for earning currency over time.</summary>
+
+{: .subaction-title }
+> Add Action
+>
+> <span>Name:</span>{: .text-yellow-300} Currency Over Time <br>
+> <span>Name for the action</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Group:</span>{: .text-yellow-300} Economy Earning<br>
+> <span>The name of the group to put this action in. (I recommend putting all the actions for earing currency in the same group to put them together)</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Exclude from Action Queue Pending/History:</span>{: .text-yellow-300} Marked as On<br>
+> <span>Excludes the action from the history. I recommend turning this on for this action since it will be running with EVERY 10min (or whatever you set present time to) so it would fill up your action history.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+
+<details markdown="1">
+<summary>Then add a Trigger for present viewers</summary>
+
+{: .subaction-title }
+> Twitch > General > Present Viewers
+
+</details>
+
+### 2. Check if live
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/watch_time_check_live.png" width="500"><br>
+First we want to make sure we are live so viewers don't get currency for hanging out in an offline stream. (We can disable this went testing to check if its working).
+
+<details markdown="1">
+<summary>So add a If/Else to check if stream is live.</summary>
+
+{: .subaction-title }
+> Core > Logic > If/Else
+>
+> <span>Input:</span>{: .text-yellow-300} %isLive%<br>
+> <span>If the stream is live given to us by streamerbot.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Operation:</span>{: .text-yellow-300} Equals<br><br>
+> <span>Value:</span>{: .text-yellow-300} Faslse
+
+#### True (aka is not live)
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Logic > Break
+>
+> <span>End the action early if not live we don't want to give anyone currency.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+### 3. Set arguments for use in code
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/watch_time_set_args.png" width="500"><br>
+Before running any code we want to set some arguments to be used in the code for easily changing later without having to touch the code.
+
+<details markdown="1">
+<summary>So add some set arguments.</summary>
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} currencyPer<br>
+> <span>The name of the variable for how much currency we want to given every present check. (i.e. every 10 min).</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} 10<br>
+> <span>The actual amount we give the viewer every present check. (i.e. 10 currency every 10 min).</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} currencyVar<br>
+> <span>The name of the variable the code uses to know what variable we store our currency in on every viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} balance<br>
+> <span>The name of the global user variable your currency is stored on each viewer. If you are following my tutorials and/or using my extensions this will just be balance</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+### 4. Execute Code to give Currency
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/watch_time_code.png" width="500"><br>
+Now we add the code to get all the present viewers and give them currency.
+
+<details markdown="1">
+<summary>So add a C# Excute Code with the following code (Explained in comments)</summary>
+
+{: .subaction-title }
+> Core > C# > Excute C# Code
+>```javascript
+>using System;
+>using System.Collections.Generic;
+>
+>public class CPHInline
+>{
+>   public bool Execute()
+>   {
+>        // Get the viewers in chat given by streamerbot
+>        CPH.TryGetArg("users", out List<Dictionary<string, object>> users);
+>
+>        // Get the amount of currency per present check we set in this action
+>        CPH.TryGetArg("currencyPer", out int currencyPer);
+>
+>        // Get the name of currency variable we set in this action
+>        CPH.TryGetArg("currencyVar", out string currencyVar);
+>
+>        // Loop through each viewer
+>        foreach(Dictionary<string, object> user in users){
+>
+>           // Check if they are following
+>           if(CPH.TwitchGetExtendedUserInfoById((string)user["id"]).IsFollowing){
+>                
+>               // Gets the viewer's current currency balance
+>               int balance = CPH.GetTwitchUserVarById<int>((string)user["id"], currencyVar, true);
+>
+>               // Set the viewer's currency balance to the current amount plus the amount we want to give them
+>               CPH.SetTwitchUserVarById((string)user["id"], currencyVar, balance+currencyPer, true);
+>
+>           }
+> 
+>        }
+>
+>        return true;
+>   }
+>}
+>```
+</details>
 
 ---
 
