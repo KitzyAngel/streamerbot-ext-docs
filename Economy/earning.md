@@ -7,7 +7,7 @@ nav_order: 2
 footnote1: <a href="#footnotes1" title='You can always just send a message through twitch or whatever platform you want but I use another action called Send Message Explained on the Send Message page, for compability with other extensions and platforms.'><sup>1</sup></a>
 footnote2: <a href="#footnotes2" title="The Pay Currency and Get Balance Actions are created in my Economy Basics Tutorial/Extension. Feel free to use any other way for adjusting currency and getting a viewer's balance if you have a different existing implementation."><sup>2</sup></a>
 
-last_modified_date: 4/10/2026
+last_modified_date: 6/10/2026
 ---
 
 # Earning Currency
@@ -28,13 +28,14 @@ An economy system needs a way for viewer's to earn the currency. This is done by
 Ways to earn currency I've implemented are:
 1. [Exchanging Channel Points](#exchanging-channel-points)
 2. [Check In Redeem](#check-in-redeem)
-3. [Subscribe/Resubscribe](#subscriptionresubscription)
-4. [Gift Subscriptions](#gift-subscriptions)
-5. [Watch Streak](#watch-streak)
-6. [Using Bits](#using-bits)
-7. [Raiding](#raiding)
-8. [Sending Messages](#sending-messages)
-9. [By Watch Time*](#by-watch-time-requires-c-code)
+3. [Following](#following)
+4. [Subscribe/Resubscribe](#subscriptionresubscription)
+5. [Gift Subscriptions](#gift-subscriptions)
+6. [Watch Streak](#watch-streak)
+7. [Using Bits](#using-bits)
+8. [Raiding](#raiding)
+9. [Sending Messages](#sending-messages)
+10. [By Watch Time*](#by-watch-time-requires-c-code)
 
 {: .fs-3 }
 <div markdown="1">
@@ -89,7 +90,19 @@ You can create the rewards on twitch or through streamerbot itself. I recommend 
 ### 2. Create Action & Add triggers
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/earning/exchange_add_action.png" width="500"><br>
-Add a new action for when someone redeems your channel point redeems.
+
+<details markdown="1">
+<summary>Add a new action for when someone redeems your channel point redeems.</summary>
+
+{: .subaction-title }
+> Add Action
+>
+> <span>Name:</span>{: .text-yellow-300} Buy Currency <br>
+> <span>Name for the action</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Group:</span>{: .text-yellow-300} Economy Earning<br>
+> <span>The name of the group to put this action in. (I recommend putting all the actions for earing currency in the same group to put them together)</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
 
 <details markdown="1">
 <summary>Then add a Trigger for each channel point redeem to allow this one action to handle all of them at once.</summary>
@@ -216,7 +229,19 @@ You can create the reward on twitch or through streamerbot itself. I recommend t
 ### 2. Create Action & Add trigger
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/earning/check_in_add_action.png" width="500"><br>
-Add a new action for when someone checks in.
+
+<details markdown="1">
+<summary>Add a new action for when someone checks in.</summary>
+
+{: .subaction-title }
+> Add Action
+>
+> <span>Name:</span>{: .text-yellow-300} Check In For Currency <br>
+> <span>Name for the action</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Group:</span>{: .text-yellow-300} Economy Earning<br>
+> <span>The name of the group to put this action in. (I recommend putting all the actions for earing currency in the same group to put them together)</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
 
 <details markdown="1">
 <summary>Then add a Trigger for the check in channel point redeem</summary>
@@ -339,13 +364,118 @@ Add a new action for when someone checks in.
 
 ---
 
+## Following
+You can allow viewers to earn your currency by following your channel.
+
+### 1. Create Action & Add trigger
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/follow_add_action.png" width="500"><br>
+
+<details markdown="1">
+<summary>Add a new action for when someone follows.</summary>
+
+{: .subaction-title }
+> Add Action
+>
+> <span>Name:</span>{: .text-yellow-300} Follow For Currency <br>
+> <span>Name for the action</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Group:</span>{: .text-yellow-300} Economy Earning<br>
+> <span>The name of the group to put this action in. (I recommend putting all the actions for earing currency in the same group to put them together)</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+<details markdown="1">
+<summary>Then add a Trigger for follows</summary>
+
+{: .subaction-title }
+> Twitch > Channel > Follow
+</details>
+
+### 2. Give the viewer the Currency
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/follow_give_currency.png" width="500"><br>
+
+<details markdown="1">
+<summary>Set arguments for Pay Currency Action{{ page.footnote2 }} and then Call it to adjust the viewer's currency.</summary>
+
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} amount<br>
+> <span>The name of the variable to store the amount we want to give the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} 100<br>
+> <span>The actual amount to give the viewer.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} redeemer<br>
+> <span>The name of the variable pay currency wants to know to adjust the redeemer.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} True<br>
+> <span>Set to True since we want to give the currency to the viewer who triggered the action.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} cost<br>
+> <span>The name of the variable pay currency wants to know how much to adjust the viewer's currency by.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} -%amount%<br>
+> <span>The amount to give the viewer. We set it to negative because pay currency decrements, so we "pay" a negative to give currency.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Actions > Run Action
+>
+> <span>Action:</span>{: .text-yellow-300} Pay Currency<br>
+> <span>The action for actually adjusting a viewer's currency</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+### 3. (OPTIONAL) Send a response message
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/follow_send_message.png" width="500"><br>
+
+<details markdown="1">
+<summary>Actually send the message by setting argument for the message and using a send message action.{{ page.footnote1 }} (I use anonymous followers so I set the message up with that in mind but you can change it to whatever you would like)</summary>
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} message<br>
+> <span>The name of the variable for the send message action to know what message to send.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300}Thank you for the follow! Followers are anonymous but you have still earned %amount% ~currencyNamePlural~!<br>
+> <span>The actual message to send. The example shows how to use a bunch of variables for a custom message. (Note, using ~ for global variables and % for local ones)</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Actions > Run Action
+>
+> <span>Action:</span>{: .text-yellow-300} \[KA\] Send Message<br>
+> <span>The action for actually sending a message</span>{: 	.text-grey-dk-000 .fs-3 }
+
+
+</details>
+
+---
+
 ## Subscription/Resubscription
 You can allow viewers to earn your currency by subscribing and resubscribing 
 
 ### 1. Create Action & Add triggers
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/earning/sub_add_action.png" width="500"><br>
-Add a new action for when someone subscribes or resubscribes
+
+<details markdown="1">
+<summary>Add a new action for when someone subscribes or resubscribes.</summary>
+
+{: .subaction-title }
+> Add Action
+>
+> <span>Name:</span>{: .text-yellow-300} Sub For Currency <br>
+> <span>Name for the action</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Group:</span>{: .text-yellow-300} Economy Earning<br>
+> <span>The name of the group to put this action in. (I recommend putting all the actions for earing currency in the same group to put them together)</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
 
 <details markdown="1">
 <summary>Then add a Trigger for both subscriptions & resubscriptions.</summary>
@@ -479,7 +609,19 @@ You can allow viewers to earn your currency by gifting subscriptions
 ### 1. Create Action & Add triggers
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/earning/gift_add_action.png" width="500"><br>
-Add a new action for when someone gifts subscriptions
+
+<details markdown="1">
+<summary>Add a new action for when someone gifts subscriptions.</summary>
+
+{: .subaction-title }
+> Add Action
+>
+> <span>Name:</span>{: .text-yellow-300} Gift Sub For Currency <br>
+> <span>Name for the action</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Group:</span>{: .text-yellow-300} Economy Earning<br>
+> <span>The name of the group to put this action in. (I recommend putting all the actions for earing currency in the same group to put them together)</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
 
 <details markdown="1">
 <summary>Then add a Triggers for gifting one sub and many subs.</summary>
@@ -572,7 +714,7 @@ We need to ignore any single gift subs that are part of a bomb because we are ha
 </details>
 
 
-### 3. Adjust the amount by number of subs or months
+### 4. Adjust the amount by number of subs or months
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/earning/gift_adjust_amount.png" width="500"><br>
 We want to give currency for every month gifted and for every sub gifted in a bomb so we need to handle both.
@@ -612,7 +754,7 @@ We want to give currency for every month gifted and for every sub gifted in a bo
 </details>
 
 
-### 4. Actually give the viewer the Currency
+### 5. Actually give the viewer the Currency
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/earning/exchange_give_currency.png" width="500"><br>
 
@@ -643,7 +785,7 @@ We want to give currency for every month gifted and for every sub gifted in a bo
 
 </details>
 
-### 5. (OPTIONAL) Get info for and send a message with new viewer balance
+### 6. (OPTIONAL) Get info for and send a message with new viewer balance
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/earning/gift_send_message.png" width="500"><br>
 
@@ -720,7 +862,19 @@ You can allow viewers to earn your currency by getting twitch watch streaks.
 ### 1. Create Action & Add trigger
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/earning/streak_add_action.png" width="500"><br>
-Add a new action for when someone gets a watch streak.
+
+<details markdown="1">
+<summary>Add a new action for when someone gets a watch streak.</summary>
+
+{: .subaction-title }
+> Add Action
+>
+> <span>Name:</span>{: .text-yellow-300} Streak For Currency <br>
+> <span>Name for the action</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Group:</span>{: .text-yellow-300} Economy Earning<br>
+> <span>The name of the group to put this action in. (I recommend putting all the actions for earing currency in the same group to put them together)</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
 
 <details markdown="1">
 <summary>Then add a Trigger for a Watch Streak</summary>
@@ -829,7 +983,19 @@ You can allow viewers to earn your currency by using bits.
 ### 1. Create Action & Add trigger
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/earning/bits_add_action.png" width="500"><br>
-Add a new action for when someone uses bits.
+
+<details markdown="1">
+<summary>Add a new action for when someone uses bits.</summary>
+
+{: .subaction-title }
+> Add Action
+>
+> <span>Name:</span>{: .text-yellow-300} Bits For Currency <br>
+> <span>Name for the action</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Group:</span>{: .text-yellow-300} Economy Earning<br>
+> <span>The name of the group to put this action in. (I recommend putting all the actions for earing currency in the same group to put them together)</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
 
 <details markdown="1">
 <summary>Then add a Trigger for using Bits</summary>
@@ -1042,7 +1208,19 @@ You can allow viewers to earn your currency by raiding.
 ### 1. Create Action & Add trigger
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/earning/raid_add_action.png" width="500"><br>
-Add a new action for when someone raids.
+
+<details markdown="1">
+<summary>Add a new action for when someone raids.</summary>
+
+{: .subaction-title }
+> Add Action
+>
+> <span>Name:</span>{: .text-yellow-300} Raid For Currency <br>
+> <span>Name for the action</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Group:</span>{: .text-yellow-300} Economy Earning<br>
+> <span>The name of the group to put this action in. (I recommend putting all the actions for earing currency in the same group to put them together)</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
 
 <details markdown="1">
 <summary>Then add a Trigger for raids</summary>
@@ -1173,6 +1351,164 @@ Add a new action for when someone raids.
 ---
 
 ## Sending Messages
+You can give users currency based on how messages they send.
+
+### 1. Create Action & Add triggers
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/message_add_action.png" width="500"><br>
+
+<details markdown="1">
+<summary>Add a new action for when someone sends a message.</summary>
+
+{: .subaction-title }
+> Add Action
+>
+> <span>Name:</span>{: .text-yellow-300} Messaging For Currency <br>
+> <span>Name for the action</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Group:</span>{: .text-yellow-300} Economy Earning<br>
+> <span>The name of the group to put this action in. (I recommend putting all the actions for earing currency in the same group to put them together)</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Exclude from Action Queue Pending/History:</span>{: .text-yellow-300} Marked as On<br>
+> <span>Excludes the action from the history. I recommend turning this on for this action since it will be running with EVERY message so it would fill up your action history very quickly.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+<details markdown="1">
+<summary>Then add a Trigger for any message</summary>
+
+{: .subaction-title }
+> Twitch > Chat > Chat Message
+
+</details>
+
+
+### 2. Check for a command
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/message_check_command.png" width="500"><br>
+First we want to make sure the message sent wasn't a command so we don't include those in the count.
+
+<details markdown="1">
+<summary>So add a If/Else to check if the message is a command.</summary>
+
+{: .subaction-title }
+> Core > Logic > If/Else
+>
+> <span>Input:</span>{: .text-yellow-300} %message%<br>
+> <span>The message given to us by streamerbot</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Operation:</span>{: .text-yellow-300} Regex Match<br>
+> <span>We are going to use a very simple regex to check it the message is a command</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} ^!<br>
+> <span>This is a very simple regex. The ^ means the start of the text and the ! just checks if there is an !. So the regex only matches if the text starts with a ! (aka a command normally).</span>{: 	.text-grey-dk-000 .fs-3 }
+
+#### True (aka is a command)
+{: .no_toc }
+
+{: .subaction-title }
+> Core > Logic > Break
+>
+> <span>End the action early if its a command since we don't wanna count it.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+
+</details>
+
+
+### 3. Count viewer's messages
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/message_count.png" width="500"><br>
+We only want to give the user currency every 10th message instead of every single message so we want to count the number they have sent this stream.
+
+<details markdown="1">
+<summary>So Add a Global Set to add to a temp variable for the user (tracking the num messages they sent).</summary>
+
+{: .subaction-title }
+> Core > Globals > Global (Set)
+>
+> <span>Destination:</span>{: .text-yellow-300} User(Redeemer)<br>
+> <span>We want to store the count of messages for a viewer on themselves so we use the redeemer for where the variable is stored.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Persisted:</span>{: .text-yellow-300} Marked as Off<br>
+> <span>If the message count is per stream or persists forever. I set this off so viewers get currency for sending every 10 messages per stream but you can turn it on if you want it to be every 10 messages overall.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Variable Name:</span>{: .text-yellow-300} numMessages<br>
+> <span>Name of the variable to store in the viewer for the current message count.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Increment:</span>{: .text-yellow-300} 1<br>
+> <span>Set to increment instead of Value to add 1 to their current message count</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+<details markdown="1">
+<summary>Then Add a Global Get t get their new message count for checking if they've earned currency.</summary>
+
+{: .subaction-title }
+> Core > Globals > Global (Get)
+>
+> <span>Source:</span>{: .text-yellow-300} User(Redeemer)<br>
+> <span>We stored the count of messages for a viewer on themselves so we use the redeemer for where the variable is stored.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Persisted:</span>{: .text-yellow-300} Marked as Off<br>
+> <span>This must match if you made the above persisted or not</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Variable Name:</span>{: .text-yellow-300} numMessages<br>
+> <span>This must match the name of the variable above</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Destination Variable:</span>{: .text-yellow-300} numMessages<br>
+> <span>The name of the variable in this action, for simiplicty we can just name it the same as the global variable</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Default Value:</span>{: .text-yellow-300} 0<br>
+> <span>This should never happen since we just set the variable but we can just set it as 0 just incase</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+### 4. Check if 10 messages have been sent
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/message_count_check.png" width="500"><br>
+Now we want to check if its the 10th, 20th, 30th, etc message sent (or however many you want to give currency at).
+
+<details markdown="1">
+<summary>So Add a If/Else to check if the message count if a multiple of 10</summary>
+
+{: .subaction-title }
+> Core > Logic > If/Else
+>
+> <span>Input:</span>{: .text-yellow-300} $math(%numMessages% # 10)$<br>
+> <span>A inline math that gets te remanider of the numMessages (this must match the variable name you set in step 3) divided by 10 (# is Modulus).</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Operation:</span>{: .text-yellow-300} Equals<br><br>
+> <span>Value:</span>{: .text-yellow-300} 0<br>
+> <span>If the remanider of the numMessages divided by 10 is 0 that means its the 10th, 20th, 30th, etc message and we wanna give currency.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+### 5. Actually give the viewer the Currency
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/message_give_currency.png" width="500"><br>
+In the true of the If/Else we want to give them currency because they have sent enough messages
+
+<details markdown="1">
+<summary>Set arguments for Pay Currency Action{{ page.footnote2 }} and then Call it to adjust the viewer's currency.</summary>
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} amount<br>
+> <span>The name of the variable to store the amount we want to give the viewer</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} 10<br>
+> <span>The actual amount to give the viewer.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} redeemer<br>
+> <span>The name of the variable pay currency wants to know to adjust the redeemer.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} True<br>
+> <span>Set to True since we want to give the currency to the viewer who triggered the action.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Arguments > Set Argument
+>
+> <span>Variable Name:</span>{: .text-yellow-300} cost<br>
+> <span>The name of the variable pay currency wants to know how much to adjust the viewer's currency by.</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value:</span>{: .text-yellow-300} -%amount%<br>
+> <span>The amount to give the viewer. We set it to negative because pay currency decrements, so we "pay" a negative to give currency.</span>{: 	.text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Core > Actions > Run Action
+>
+> <span>Action:</span>{: .text-yellow-300} Pay Currency<br>
+> <span>The action for actually adjusting a viewer's currency</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
 
 ---
 
