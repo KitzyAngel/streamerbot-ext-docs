@@ -7,7 +7,7 @@ nav_order: 2
 footnote1: <a href="#footnotes1" title='You can always just send a message through twitch or whatever platform you want but I use another action called Send Message Explained on the Send Message page, for compability with other extensions and platforms.'><sup>1</sup></a>
 footnote2: <a href="#footnotes2" title="The Pay Currency and Get Balance Actions are created in my Economy Basics Tutorial/Extension. Feel free to use any other way for adjusting currency and getting a viewer's balance if you have a different existing implementation."><sup>2</sup></a>
 
-last_modified_date: 6/10/2026
+last_modified_date: 9/10/2026
 ---
 
 # Earning Currency
@@ -1675,3 +1675,81 @@ Now we add the code to get all the present viewers and give them currency.
 <hr style="border:1px solid gray">
 
 # Premade Extensions
+
+## Short Video
+{: .no_toc }
+<iframe height="560" width="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+---
+
+## 1. IMPORTANT: Check Overrides
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/premade_overrides.png" width="500"><br>
+If you have imported any of my other extensions this extension will override the following actions:
+* Pay Currency
+* Get Balance
+* [KA] Send Message
+
+So, if you have made any changes to these methods. Duplicate them before importing this extension to keep your changes.
+
+
+## 2. Import the extension
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/premade_import.png" width="500"><br>
+Download the [extension]({{ site.baseurl }}/downloads/EconomyEarning.sb). Then click Import at the top of streamerbot and drag the file into the box. Then click Import then Ok.
+
+## 3. Replace Overrides if needed
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/premade_replace_overrides.gif" width="500"><br>
+If you did duplicate any actions in step 1. Copy their contents back into the original, now overriden, actions.
+
+## 4. Create Name of your Currency if needed
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/basics/add_currency_global_variables.png" width="500"><br>
+If you haven't used any of my economy extensions before you need 2 Global variables for the name of your currency. If you have imported or made yourself one of my other economy extensions you can skip this step.<br><br>
+So Create 2 Global Variables for the name of your currency for the viewers to see! Making them global variables makes it much easier if you want to rename your currency at any point.<br><br>
+Click Global Variables at the top, then Persisted Globals, then right click in table and click 'Add'. 
+
+<details markdown="1">
+<summary>
+Then add a variable for the singular name of your currency and one for the plural name of your currency.
+</summary>
+
+{: .subaction-title }
+> Add Global Variable
+> 
+> <span>Variable</span>{: .text-yellow-300} currencyName<br>
+> <span>The name of the variable for the singular name of your currency</span>{: .text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value</span>{: .text-yellow-300} token<br>
+> <span>The singular name of your currency</span>{: .text-grey-dk-000 .fs-3 }
+
+{: .subaction-title }
+> Add Global Variable
+> 
+> <span>Variable</span>{: .text-yellow-300} currencyNamePlural<br>
+> <span>The name of the variable for the plural name of your currency</span>{: .text-grey-dk-000 .fs-3 }<br><br>
+> <span>Value</span>{: .text-yellow-300} tokens<br>
+> <span>The plural name of your currency</span>{: .text-grey-dk-000 .fs-3 }
+
+</details>
+
+## 5. Turn on any ways to earn currency you want
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/premade_turn_on_actions.png" width="500"><br>
+Enable any actions in the Economy Earning Group for ways you would like your viewers to earn your currency.<br>
+
+## 6. Add needed Channel Point Redeems
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/premade_add_redeems.png" width="500"><br>
+If you turned on any of the following actions they have channel point redeems you must create them:
+* Check In For Currency: See [here](#1-create-channel-point-redeem) on how and what to create
+* Buy Currency: See [here](#1-create-channel-point-redeems) on how and what to create
+
+<img src="{{ site.baseurl }}/img/Economy/earning/premade_update_triggers.png" width="500"><br>
+Then Update the triggers for those actions to use the redeems you created.
+
+## 7. OPTIONALLY: Change earning amounts and messages
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/premade_change_amounts.png" width="500"><br>
+Change the amount viewer's earn and/or message for each action to what you want. Found under blue comments in the actions.
+
