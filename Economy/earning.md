@@ -1682,7 +1682,10 @@ Now we add the code to get all the present viewers and give them currency.
 
 ---
 
-## 1. IMPORTANT: Check Overrides
+## Basic Extension
+This extension includes all the ways for your viewers to earn money as listed above that does NOT require C# code.
+
+### 1. IMPORTANT: Check Overrides
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/earning/premade_overrides.png" width="500"><br>
 If you have imported any of my other extensions this extension will override the following actions:
@@ -1693,17 +1696,17 @@ If you have imported any of my other extensions this extension will override the
 So, if you have made any changes to these methods. Duplicate them before importing this extension to keep your changes.
 
 
-## 2. Import the extension
+### 2. Import the extension
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/earning/premade_import.png" width="500"><br>
 Download the [extension]({{ site.baseurl }}/downloads/EconomyEarning.sb). Then click Import at the top of streamerbot and drag the file into the box. Then click Import then Ok.
 
-## 3. Replace Overrides if needed
+### 3. Replace Overrides if needed
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/earning/premade_replace_overrides.gif" width="500"><br>
 If you did duplicate any actions in step 1. Copy their contents back into the original, now overriden, actions.
 
-## 4. Create Name of your Currency if needed
+### 4. Create Name of your Currency if needed
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/basics/add_currency_global_variables.png" width="500"><br>
 If you haven't used any of my economy extensions before you need 2 Global variables for the name of your currency. If you have imported or made yourself one of my other economy extensions you can skip this step.<br><br>
@@ -1733,12 +1736,12 @@ Then add a variable for the singular name of your currency and one for the plura
 
 </details>
 
-## 5. Turn on any ways to earn currency you want
+### 5. Turn on any ways to earn currency you want
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/earning/premade_turn_on_actions.png" width="500"><br>
 Enable any actions in the Economy Earning Group for ways you would like your viewers to earn your currency.<br>
 
-## 6. Add needed Channel Point Redeems
+### 6. Add needed Channel Point Redeems
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/earning/premade_add_redeems.png" width="500"><br>
 If you turned on any of the following actions they have channel point redeems you must create them:
@@ -1748,8 +1751,46 @@ If you turned on any of the following actions they have channel point redeems yo
 <img src="{{ site.baseurl }}/img/Economy/earning/premade_update_triggers.png" width="500"><br>
 Then Update the triggers for those actions to use the redeems you created.
 
-## 7. OPTIONALLY: Change earning amounts and messages
+### 7. OPTIONALLY: Change earning amounts and messages
 {: .no_toc }
 <img src="{{ site.baseurl }}/img/Economy/earning/premade_change_amounts.png" width="500"><br>
 Change the amount viewer's earn and/or message for each action to what you want. Found under blue comments in the actions.
 
+---
+
+## Watch Time extension (HAS C# CODE)
+This extension is just the way for viewer's to earn currency over time. Seperated because it has C# Code.
+
+### 1. Import the extension
+{: .no_toc }
+Follow the steps 1-4 from the basic extension above but using [this]({{ site.baseurl }}/downloads/EconomyEarningOverTime.sb) download instead.
+
+### 2. Turn on Present Viewers
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/watch_time_present_viewers.png" width="500"><br>
+We need to tell streamerbot to track who is active in stream first.
+
+<details markdown="1">
+<summary>On the Left go to Platforms -> Twitch (Or whatever platform you want) -> Settings -> Present Viewers</summary>
+
+{: .subaction-title }
+> Platforms > Twitch > Settings > Present Viewers
+>
+> <span>Enabled:</span>{: .text-yellow-300} Marked as On<br>
+> <span>Turn on to allow streamerbot to track who is in your chat</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Live Update:</span>{: .text-yellow-300} Marked as On<br>
+> <span>Make streamerbot use actual viewers instead of fake ones (only for Twitch).</span>{: 	.text-grey-dk-000 .fs-3 }<br><br>
+> <span>Update Interval:</span>{: .text-yellow-300} 10 minutes<br>
+> <span>How often to check who is still in chat. (Keep in mind this will be how often you give currency).</span>{: 	.text-grey-dk-000 .fs-3 }
+
+</details>
+
+### 3. Change currency variable if needed
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/premade_watchtime_change_variable.png" width="500"><br>
+Change the name of the variable for your currency if it's different than the default I use in my extensions by changing the value in the set Argument for %currencyVar%.
+
+### 4. OPTIONALLY: Change earning amount per time
+{: .no_toc }
+<img src="{{ site.baseurl }}/img/Economy/earning/premade_watchtime_change_amount.png" width="500"><br>
+Change the amount viewer's earn per time you set when setting the present viewer settings (step 1) if you want by changing the value in the set Argument for %currencyPer%
